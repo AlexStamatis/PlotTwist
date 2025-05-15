@@ -1,0 +1,44 @@
+:host {
+  .main-header {
+    color: rgb(206, 60, 15);
+    font-style: oblique;
+    cursor: pointer;
+    font-size: 50px;
+    margin-top: 20px;
+   
+  }
+  .header-navbar {
+    font-size: 18px;
+    justify-content: space-between;
+    cursor: pointer;
+     margin-top: 20px;
+  }
+  .navbar-options {
+    font-weight: bold;
+    margin: 10px;
+    color: white;
+  }
+  .navbar-options:hover {
+    color: rgb(223, 220, 213);
+  }
+
+  .login-btn {
+    border: none;
+    outline: none;
+    padding: 4px 10px;
+    background-color: rgb(206, 60, 15);
+    color: white;
+    font-weight: bold;
+    border-radius: 30px;
+    height: 40px;
+    cursor: pointer;
+  }
+  .login-btn:hover {
+    background-color: rgb(254, 48, 48);
+  }
+  .fa-user {
+    margin-right: 5px;
+  }
+
+  
+}

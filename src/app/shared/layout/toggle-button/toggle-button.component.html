@@ -1,0 +1,11 @@
+<div class="toggle-container">
+  <button
+    (focus)="onBtnFocus(option)"
+    (click)="onBtnClick(option)"
+    *ngFor="let option of options"
+    class="toggle-button"
+    [ngClass]="{ 'active-button': option.isActive }"
+  >
+    {{ option.btnName }}
+  </button>
+</div>

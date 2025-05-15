@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background-image: linear-gradient(rgba(13, 8, 58, 0.793),rgb(7, 4, 28));
+    
+    background-attachment: fixed;
+    
+
+  
+ }
+
+.dropdown-item:hover {
+  background-color: rgb(209, 209, 219) !important;
+}

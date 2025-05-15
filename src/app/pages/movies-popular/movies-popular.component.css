@@ -1,0 +1,35 @@
+:host {
+
+    h2 {
+        color:white;
+    }
+  .rating-badge {
+    position: absolute;
+    bottom: -20px;
+    left: 20px;
+    background-color: rgba(53, 66, 69, 0.85);
+    color: #f1b903;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+    font-weight: bold;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    
+  }
+  .image-wrapper {
+    position: relative;
+  }
+
+  .rating-badge:hover {
+  transform: scale(1.1);
+}
+
+.fa-calendar {
+    margin-right : 5px;
+}
+}

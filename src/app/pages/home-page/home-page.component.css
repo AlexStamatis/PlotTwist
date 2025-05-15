@@ -1,0 +1,54 @@
+:host {
+  h2,
+  h3 {
+    text-align: center;
+    color: rgb(245, 247, 247);
+    text-shadow: color(from color srgb r g b);
+    font-style: italic;
+    margin-top: 30px;
+    
+  }
+
+  .search-wrapper {
+    max-width: 800px;
+    margin: 20px auto;
+  }
+
+  .search-box {
+    position: relative;
+    border-radius: 50px;
+  }
+
+  .search-input {
+    border-radius: 50px;
+    padding-left: 45px;
+    padding-right: 20px;
+    height: 50px;
+  }
+
+  .search-button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+  }
+
+  .search-button:hover {
+    background-color: #0b5ed7;
+  }
+
+  .trending {
+    display: flex;
+    margin-top: 50px;
+  }
+  p {
+    color: white;
+    font-size: 25px;
+    margin-left: 100px;
+    padding-left: 50px;
+  }
+
+}
