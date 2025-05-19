@@ -13,13 +13,11 @@ import { TmdbService } from '../../shared/services/tmdb.service';
   styleUrl: './movies-popular.component.css'
 })
 export class MoviesPopularComponent {
-  movies;
+  popularMovies;
 
 constructor(private tmdbService: TmdbService) {
-  this.movies = this.tmdbService.movies 
+  this.popularMovies = this.tmdbService.movies;
 
-  this.tmdbService.getMoviesPopular().subscribe((res:any) => {
-    this.movies.set(res.results);
-  })
+  this.tmdbService.getMoviesPopular();
 }
 }

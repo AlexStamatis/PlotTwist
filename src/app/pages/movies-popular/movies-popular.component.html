@@ -1,23 +1,23 @@
 <h2>Popular Movies</h2>
 <div class="row">
-  <div class="col-md-2 mb-3" *ngFor="let movie of movies()">
+  <div class="col-md-2 mb-3" *ngFor="let popularMovie of popularMovies()">
     <div class="card h-100 position-relative overflow-hidden">
       <div class="image-wrapper position-relative">
         <img
-          [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+          [src]="'https://image.tmdb.org/t/p/w500' + popularMovie.poster_path"
           class="card-img-top"
-          alt="{{ movie.title }}"
+          alt="{{ popularMovie.title }}"
         />
         <div class="rating-badge">
-          {{ movie.vote_average > 0 ? (movie.vote_average | number : "1.1-1") : 'NR' }}
+          {{ popularMovie.vote_average > 0 ? (popularMovie.vote_average | number : "1.1-1") : 'NR' }}
         </div>
       </div>
 
       <div class="card-body">
-        <h5 class="card-title">{{ movie.title }}</h5>
+        <h5 class="card-title">{{ popularMovie.title }}</h5>
         <div class="release-date">
           <i class="fa-solid fa-calendar"></i
-          >{{ movie.release_date | date : "longDate" }}
+          >{{ popularMovie.release_date | date : "longDate" }}
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 :host {
+ 
   h2,
   h3 {
     text-align: center;
@@ -6,7 +7,6 @@
     text-shadow: color(from color srgb r g b);
     font-style: italic;
     margin-top: 30px;
-    
   }
 
   .search-wrapper {
@@ -51,4 +51,20 @@
     padding-left: 50px;
   }
 
+  .movies-scrollbar-container {
+    position: relative;
+    
+    
+    
+  }
+
+  .movies-scrollbar {
+    display: flex;
+    gap: 20px;
+    margin-left: 100px;
+    overflow: auto;
+    white-space: nowrap;
+    mask-image: linear-gradient(to right,black 80%,transparent);
+    overflow-y: hidden;
+  }
 }
