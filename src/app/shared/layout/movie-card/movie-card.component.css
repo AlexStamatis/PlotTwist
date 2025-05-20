@@ -38,7 +38,7 @@ display:block;
   display:flex;
   font-size: 21px;
   font-weight: 600;
-  margin-top: 25px;
+  margin-top: 5px;
   line-height: 1.2;
   overflow: hidden;
  
@@ -55,8 +55,7 @@ display:block;
 
 .rating-badge {
   position: absolute;
-  bottom: -20px;
-  left: 20px;
+  bottom: -10px;
   background-color: rgba(53, 66, 69, 0.85);
   color: #f1b903;
   border-radius: 50%;

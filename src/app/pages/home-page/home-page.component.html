@@ -20,8 +20,8 @@
 </div>
 <div class="movies-scrollbar-container">
   <div class="movies-scrollbar">
-    <ng-container *ngFor= "for let item of trendingItems()">
-      <app-movie-card
+     @for (item of trendingItems();track item.id) {
+       <app-movie-card
       
       [title]="item.title || item.name"
       [posterPath]="item.poster_path"
@@ -29,6 +29,8 @@
       [voteAverage]="item.vote_average"
 
     ></app-movie-card>
-    </ng-container> 
+     }
+     
+    
   </div>
 </div>

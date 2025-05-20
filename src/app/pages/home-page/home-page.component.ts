@@ -1,8 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { ToggleButtonComponent } from '../../shared/layout/toggle-button/toggle-button.component';
 import { TmdbService } from '../../shared/services/tmdb.service';
-import { CommonModule} from '@angular/common';
-import { MovieCardComponent } from "../../shared/layout/movie-card/movie-card.component";
+import { MovieCardComponent } from '../../shared/layout/movie-card/movie-card.component';
+import { CommonModule } from '@angular/common';
 
 export interface ButtonOptions {
   btnName: string;
@@ -19,15 +19,14 @@ export interface ButtonOptions {
 export class HomePageComponent {
   mediaType = signal<'movies' | 'tv'>('movies');
 
- trendingItems = signal<any[]>([]);
+  trendingItems = signal<any[]>([]);
 
   constructor(private tmdbService: TmdbService) {
-   this.getTrendingItems();
-  
+    this.getTrendingItems();
   }
 
   getTrendingItems() {
-    if(this.mediaType() === 'movies') {
+    if (this.mediaType() === 'movies') {
       this.tmdbService.getTrendingMovies().subscribe((res: any) => {
         this.trendingItems.set(res.results);
       });
@@ -36,10 +35,9 @@ export class HomePageComponent {
         this.trendingItems.set(res.results);
       });
     }
-
   }
 
-  onToggleChange(option:string) {
+  onToggleChange(option: string) {
     this.mediaType.set(option === 'Movies' ? 'movies' : 'tv');
     this.getTrendingItems();
   }

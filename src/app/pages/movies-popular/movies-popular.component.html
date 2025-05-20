@@ -1,25 +1,21 @@
 <h2>Popular Movies</h2>
-<div class="row">
-  <div class="col-md-2 mb-3" *ngFor="let popularMovie of popularMovies()">
-    <div class="card h-100 position-relative overflow-hidden">
-      <div class="image-wrapper position-relative">
-        <img
-          [src]="'https://image.tmdb.org/t/p/w500' + popularMovie.poster_path"
-          class="card-img-top"
-          alt="{{ popularMovie.title }}"
-        />
-        <div class="rating-badge">
-          {{ popularMovie.vote_average > 0 ? (popularMovie.vote_average | number : "1.1-1") : 'NR' }}
-        </div>
-      </div>
-
-      <div class="card-body">
-        <h5 class="card-title">{{ popularMovie.title }}</h5>
-        <div class="release-date">
-          <i class="fa-solid fa-calendar"></i
-          >{{ popularMovie.release_date | date : "longDate" }}
-        </div>
-      </div>
+<div class="movies-container">
+  @if (popularMovies().length){
+  <div class="movies-grid">
+    @for (popularMovie of popularMovies();track popularMovie.id) {
+    <div class="movies-column">
+      <app-movie-card
+        [title]="popularMovie.title"
+        [posterPath]="popularMovie.poster_path"
+        [releaseDate]="popularMovie.release_date"
+        [voteAverage]="popularMovie.vote_average"
+      >
+      </app-movie-card>
     </div>
+
+    }
+    
   </div>
+<button class="load-more-btn" (click)="onloadNextPages()">Load More</button>
+  }
 </div>

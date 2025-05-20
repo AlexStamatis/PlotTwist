@@ -2,34 +2,34 @@
 
     h2 {
         color:white;
+        margin-left: 50px;
+        margin-top: 50px;
     }
-  .rating-badge {
-    position: absolute;
-    bottom: -20px;
-    left: 20px;
-    background-color: rgba(53, 66, 69, 0.85);
-    color: #f1b903;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 15px;
-    font-weight: bold;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    z-index: 1;
-    
-  }
-  .image-wrapper {
-    position: relative;
-  }
 
-  .rating-badge:hover {
-  transform: scale(1.1);
-}
+     .movies-grid {
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top:50px;
+      margin-left: 400px;
+      row-gap: 30px;
+      }
 
-.fa-calendar {
-    margin-right : 5px;
-}
-}
+      .load-more-btn{
+        display:block;
+        margin-top:30px;
+        padding: 10px 25px;
+        font-size: 20px;
+        border-radius: 20px;
+        background-color: lightskyblue;
+        font-weight: bold;
+        cursor: pointer;
+        width:800px;
+        height:50px;
+        margin-left: 550px;
+      }
+
+      .load-more-btn:hover {
+        background-color: rgb(0, 200, 255);
+      }
+  
+  }
