@@ -1,0 +1,17 @@
+
+<div class="movie-card position-relative overflow-hidden">
+  <div class="image-wrapper position-relative">
+    <img [src]="'https://image.tmdb.org/t/p/w500/' + posterPath" alt="{{ title }}" />
+    <div class="rating-badge">
+      {{ voteAverage > 0 ? (voteAverage | number : '1.1-1') : 'NR' }}
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h5 class="title" [title]="title">{{ title }}</h5>
+    <div class="release-date">
+      <i class="fa-solid fa-calendar"></i>
+      {{ releaseDate | date : 'longDate' }}
+    </div>
+  </div>
+</div>

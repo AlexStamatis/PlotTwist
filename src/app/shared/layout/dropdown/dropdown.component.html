@@ -1,0 +1,10 @@
+<div class="dropdown">
+  <div data-toggle="dropdown">
+    {{ category }}
+  </div>
+  <ul class="dropdown-menu">
+    <li *ngFor="let option of options">
+      <a class="dropdown-item" (click)="onSelect(option)"> {{ option }}</a>
+    </li>
+  </ul>
+</div>

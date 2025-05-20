@@ -1,0 +1,33 @@
+<div class="d-flex justify-content-between ml-5 mr-5">
+  <div class="d-flex">
+    <h1 class="main-header" (click)="sendHome()">Plot Twist</h1>
+    <nav class="navbar header-navbar">
+      <a class="navbar-options"
+        ><app-dropdown
+          [category]="'Movies'"
+          [options]="moviesOptions"
+          (selectionChanged)="onDropdownSelect('movies',$event)"
+        ></app-dropdown
+      ></a>
+      <a class="navbar-options"
+        ><app-dropdown
+          [category]="'TV Shows'"
+          [options]="tvshowsOptions"
+          (selectionChanged)="onDropdownSelect('tv',$event)"
+        ></app-dropdown
+      ></a>
+      <a class="navbar-options"
+        ><app-dropdown
+          [category]="'People'"
+          [options]="peopleOptions"
+          (selectionChanged)="onDropdownSelect('people', $event)"
+        ></app-dropdown
+      ></a>
+    </nav>
+  </div>
+  <div class="d-flex">
+    <button type="button" class="login-btn align-self-center">
+      <i class="fa-solid fa-user"></i>Login or Register
+    </button>
+  </div>
+</div>
