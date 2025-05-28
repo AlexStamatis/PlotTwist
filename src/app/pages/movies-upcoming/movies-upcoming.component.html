@@ -1,1 +1,22 @@
-<p>movies-upcoming works!</p>
+<div class="movies-container">
+  <div class="filters-wrapper">
+    <app-filters [filterTitle]="'Upcoming'"></app-filters>
+  </div>
+  @if (upcomingMovies().length) {
+  <div class="movies-grid-and-button">
+    <div class="movies-grid">
+      @for (upcomingMovie of upcomingMovies();track upcomingMovie.id) {
+      <app-movie-card
+        [title]="upcomingMovie.title"
+        [posterPath]="upcomingMovie.poster_path"
+        [releaseDate]="upcomingMovie.release_date"
+        [voteAverage]="upcomingMovie.vote_average"
+      >
+      </app-movie-card>
+      }
+    </div>
+    <button class="load-more-btn" (click)="onLoadNextPages()">Load More</button>
+  </div>
+
+  }
+</div>

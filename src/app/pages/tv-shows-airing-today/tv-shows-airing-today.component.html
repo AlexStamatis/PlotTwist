@@ -1,1 +1,22 @@
-<p>tv-shows-airing-today works!</p>
+<div class="series-container">
+  <div class="filters-wrapper">
+    <app-filters [filterTitle]="'Airing Today'"></app-filters>
+  </div>
+  @if (airingTodayTvShows().length) {
+  <div class="series-grid-and-button">
+    <div class="series-grid">
+      @for (airingTodayTvShow of airingTodayTvShows();track airingTodayTvShow.id) {
+      <app-movie-card
+        [title]="airingTodayTvShow.original_name"
+        [posterPath]="airingTodayTvShow.poster_path"
+        [releaseDate]="airingTodayTvShow.first_air_date"
+        [voteAverage]="airingTodayTvShow.vote_average"
+      >
+      </app-movie-card>
+      }
+    </div>
+    <button class="load-more-btn" (click)="onLoadNextPages()">Load More</button>
+  </div>
+
+  }
+</div>

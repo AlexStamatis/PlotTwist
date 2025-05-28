@@ -1,0 +1,10 @@
+:host {
+
+  
+    .filters {
+        display:flex;
+        width: 300px;
+        color:white;
+        
+    }
+}

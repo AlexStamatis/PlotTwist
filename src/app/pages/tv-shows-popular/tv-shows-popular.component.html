@@ -1,1 +1,22 @@
-<p>tv-shows-popular works!</p>
+<div class="series-container">
+  <div class="filters-wrapper">
+    <app-filters [filterTitle]="'Popular'"></app-filters>
+  </div>
+  @if (popularTvShows().length) {
+  <div class="series-grid-and-button">
+    <div class="series-grid">
+      @for (popularTvShow of popularTvShows();track popularTvShow.id) {
+      <app-movie-card
+        [title]="popularTvShow.original_name"
+        [posterPath]="popularTvShow.poster_path"
+        [releaseDate]="popularTvShow.first_air_date"
+        [voteAverage]="popularTvShow.vote_average"
+      >
+      </app-movie-card>
+      }
+    </div>
+    <button class="load-more-btn" (click)="onLoadNextPages()">Load More</button>
+  </div>
+
+  }
+</div>

@@ -1,36 +1,64 @@
-<div>
-  <h2>Endless Stories.One Place.</h2>
-  <h3>Only for Movie Nerds</h3>
-</div>
-<div class="search-wrapper">
-  <div class="search-box">
-    <input
-      type="text"
-      class="form-control search-input"
-      placeholder="Search for a movie,tv show,person..."
-    />
-    <button class="btn btn-primary search-button">Search</button>
+<div class="home-page-container">
+  <div>
+    <h2>Endless Stories.One Place.</h2>
+    <h3>Only for Movie Nerds</h3>
   </div>
-</div>
-<div class="trending">
-  <p>Trending</p>
-  <div class="toggle-button">
-    <app-toggle-button [options]="buttonOptions" (optionChanged)="onToggleChange($event)"></app-toggle-button>
+  <div class="search-wrapper">
+    <div class="search-box">
+      <input
+        type="text"
+        class="form-control search-input"
+        placeholder="Search for a movie,tv show,person..."
+      />
+      <button class="btn btn-primary search-button">Search</button>
+    </div>
   </div>
-</div>
-<div class="movies-scrollbar-container">
-  <div class="movies-scrollbar">
-     @for (item of trendingItems();track item.id) {
-       <app-movie-card
+  <div class="trending">
+    <p>Trending</p>
+    <div class="toggle-button">
+      <app-toggle-button
+        [options]="buttonOptions"
+        (optionChanged)="onToggleChange($event)"
+      ></app-toggle-button>
+    </div>
+  </div>
+  <div class="movies-scrollbar-container">
+    <div class="movies-scrollbar">
+      @for (item of trendingItems();track item.id) {
+      <app-movie-card
+        [title]="item.title || item.name"
+        [posterPath]="item.poster_path"
+        [releaseDate]="item.release_date || item.first_air_date"
+        [voteAverage]="item.vote_average"
+      ></app-movie-card>
+      }
+    </div>
+  </div>
+  <div class="trailers">
+    <p>Trailers</p>
+    <div class="toggle-button">
+      <app-toggle-button
+        [options]="buttonOptionsTrailers"
+        (optionChanged)="onToggleChangeTrailers($event)"
+      ></app-toggle-button>
+    </div>
+  </div>
+  <div class="trailers-scrollbar-container">
+    <div class="trailers-scrollbar">
+      @if (mediaTypeTrailers() === 'movies' || mediaTypeTrailers() === 'Released This Week') {
+        @for(trailer of movieTrailers();track trailer.id) {
+          <app-trailer-card [trailer]="trailer"/>
+        }
+      } @else if (mediaTypeTrailers() === 'tv' || mediaTypeTrailers() === 'Released This Week') {
+        @for (trailer of tvTrailers(); track trailer.id) {
+          <app-trailer-card [trailer]="trailer"/>
+        }
+      }
       
-      [title]="item.title || item.name"
-      [posterPath]="item.poster_path"
-      [releaseDate]="item.release_date || item.first_air_date"
-      [voteAverage]="item.vote_average"
-
-    ></app-movie-card>
-     }
-     
-    
+    </div>
   </div>
+  
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Open Modal
+</button>
 </div>

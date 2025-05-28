@@ -1,1 +1,11 @@
-<p>popular-people works!</p>
+<div class="page-background">
+  <h3>Popular People</h3>
+  <div class="people-container">
+    @for (person of popularPeople();track person.id) {
+    <app-people-card [person]="person" />
+    }
+  </div>
+  <div class="btn-container">
+    <button class="load-more-btn" (click)="onLoadNextPages()">Load More</button>
+  </div>
+</div>

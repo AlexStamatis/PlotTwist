@@ -1,1 +1,22 @@
-<p>tv-shows-on-tv works!</p>
+<div class="series-container">
+  <div class="filters-wrapper">
+    <app-filters [filterTitle]="'Airing Today'"></app-filters>
+  </div>
+  @if (showsOnTv().length) {
+  <div class="series-grid-and-button">
+    <div class="series-grid">
+      @for (showOnTv of showsOnTv();track showOnTv.id) {
+      <app-movie-card
+        [title]="showOnTv.original_name"
+        [posterPath]="showOnTv.poster_path"
+        [releaseDate]="showOnTv.first_air_date"
+        [voteAverage]="showOnTv.vote_average"
+      >
+      </app-movie-card>
+      }
+    </div>
+    <button class="load-more-btn" (click)="onLoadNextPages()">Load More</button>
+  </div>
+
+  }
+</div>

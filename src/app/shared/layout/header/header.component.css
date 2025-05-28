@@ -1,17 +1,32 @@
 :host {
+ display: block;
+ padding: 15px 0;
+
+.header-container {
+ 
+   max-width: 1300px;
+   flex-wrap:wrap;
+   margin:auto;
+   
+}
   .main-header {
     color: rgb(206, 60, 15);
     font-style: oblique;
     cursor: pointer;
     font-size: 50px;
     margin-top: 20px;
+    flex-wrap:wrap;
+   
+   
+    
    
   }
   .header-navbar {
+    display:flex;
     font-size: 18px;
     justify-content: space-between;
     cursor: pointer;
-     margin-top: 20px;
+    margin-top: 20px;
   }
   .navbar-options {
     font-weight: bold;

@@ -1,0 +1,44 @@
+:host {
+  .trailer-card {
+    width: 370px;
+    background: white;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .trailer-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .trailer-card:hover {
+    width: 400px;
+    transition: ease-in 0.1s;
+  }
+
+  .thumbnail-wrapper{
+    position:relative;
+    display:block;
+  }
+
+  .play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 36px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 30%;
+  padding: 14px;
+}
+
+.title {
+    text-wrap: nowrap;
+    font-family: cursive;
+   
+    
+    
+    
+}
+}

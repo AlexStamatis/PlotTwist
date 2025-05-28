@@ -1,13 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    background-image: linear-gradient(rgba(13, 8, 58, 0.793),rgb(7, 4, 28));
-    
-    background-attachment: fixed;
-    
+  background-image: linear-gradient(rgba(13, 8, 58, 0.793), rgb(7, 4, 28));
 
-  
- }
+  background-attachment: fixed;
+}
 
 .dropdown-item:hover {
   background-color: rgb(209, 209, 219) !important;
 }
+
+
+/* @media only screen and (min-width: 700px) {
+    html {
+        --numberOfDiscoverColumns:2
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    html {
+        --numberOfDiscoverColumns:3
+    }
+}
+
+@media only screen and (min-width: 1040px) {
+    html {
+        --numberOfDiscoverColumns:4
+    }
+}
+
+@media only screen and (min-width: 1240px) {
+    html {
+        --numberOfDiscoverColumns:5
+    }
+} */

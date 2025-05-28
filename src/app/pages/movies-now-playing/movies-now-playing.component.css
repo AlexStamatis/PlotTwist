@@ -1,0 +1,50 @@
+:host {
+  display: block;
+  padding-top: 30px;
+
+  .movies-container {
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    box-sizing: border-box;
+    max-width: 1250px;
+    padding: 0 20px;
+  }
+
+  .filters-wrapper {
+    flex: 0 0 20%;
+    min-width: 300px;
+    border: 1px solid yellow;
+  }
+
+  .movies-grid-and-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .movies-grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 60px;
+  }
+
+  .load-more-btn {
+    margin-top: 30px;
+    padding: 10px 25px;
+    font-size: 20px;
+    border-radius: 20px;
+    background-color: rgb(94, 110, 190);
+    font-weight: bold;
+    cursor: pointer;
+    width: 300px;
+    align-self: center;
+  }
+
+  .load-more-btn:hover {
+    background-color: rgb(112, 125, 191);
+  }
+}

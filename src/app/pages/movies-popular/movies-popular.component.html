@@ -1,9 +1,11 @@
-<h2>Popular Movies</h2>
 <div class="movies-container">
+  <div class="filters-wrapper">
+    <app-filters [filterTitle]="'Popular Movies'"></app-filters>
+  </div>
   @if (popularMovies().length){
-  <div class="movies-grid">
-    @for (popularMovie of popularMovies();track popularMovie.id) {
-    <div class="movies-column">
+  <div class="movies-grid-and-button">
+    <div class="movies-grid">
+      @for (popularMovie of popularMovies();track popularMovie.id) {
       <app-movie-card
         [title]="popularMovie.title"
         [posterPath]="popularMovie.poster_path"
@@ -11,11 +13,11 @@
         [voteAverage]="popularMovie.vote_average"
       >
       </app-movie-card>
+      }
     </div>
 
-    }
-    
+    <button class="load-more-btn" (click)="onLoadNextPages()">Load More</button>
   </div>
-<button class="load-more-btn" (click)="onloadNextPages()">Load More</button>
+
   }
 </div>
