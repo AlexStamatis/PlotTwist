@@ -19,13 +19,20 @@ export interface ButtonOptions {
 export class HomePageComponent {
   mediaType = signal<'movies' | 'tv'>('movies');
   mediaTypeTrailers = signal <'movies' | 'tv' | 'Released This Week'>('movies');
+  mediaTypeRecommended = signal<'movies' | 'tv'>('movies')
+
   tvTrailers = signal<any[]>([]);
   movieTrailers = signal<any[]>([]);
   trendingItems = signal<any[]>([]);
+  recommendedItems = signal<any[]>([]);
+
+  movieId = 27205;
+  tvId = 1396;
 
   constructor(private tmdbService: TmdbService) {
     this.getTrendingItems();
     this.onLoadMovieTrailers();
+    this.getRecommendedItems(this.movieId,this.tvId);
    
   }
 
@@ -41,22 +48,32 @@ export class HomePageComponent {
     }
   }
 
-  onToggleChange(option: string) {
+    onToggleChange(option: string) {
     this.mediaType.set(option === 'Movies' ? 'movies' : 'tv');
     this.getTrendingItems();
   }
 
-  onToggleChangeTrailers(option:string) {
-    this.mediaTypeTrailers.set(option === 'Movies' ? 'movies' : 'tv')
-
-   if (option === 'Movies') {
-    this.onLoadMovieTrailers();
-   } else if( option === 'TV') {
-    this.onLoadTvTrailers();
-   } else if(option === 'Released This Week') {
-    this.onLoadThisWeeksTrailers();
+  getRecommendedItems(movieId:number, tvId:number) {
+   if(this.mediaTypeRecommended() === 'movies') {
+    this.tmdbService.getRecommendedMovies(movieId).subscribe((res:any) => {
+      this.recommendedItems.set(res.results);
+    })
+   } else {
+    this.tmdbService.getRecommendedTvShows(tvId).subscribe((res:any) => {
+      this.recommendedItems.set(res.results)
+    })
    }
+    
   }
+
+  onToggleChangeRecommended(option: string) {
+    this.mediaTypeRecommended.set(option === 'Movies' ? 'movies' : 'tv')
+    this.getRecommendedItems(this.movieId,this.tvId);
+  }
+
+
+
+
 
   onLoadTvTrailers() {
     this.tvTrailers.set([]);
@@ -140,6 +157,18 @@ export class HomePageComponent {
     });
   }
 
+    onToggleChangeTrailers(option:string) {
+    this.mediaTypeTrailers.set(option === 'Movies' ? 'movies' : 'tv')
+
+   if (option === 'Movies') {
+    this.onLoadMovieTrailers();
+   } else if( option === 'TV') {
+    this.onLoadTvTrailers();
+   } else if(option === 'Released This Week') {
+    this.onLoadThisWeeksTrailers();
+   }
+  }
+
   buttonOptions: ButtonOptions[] = [
     { btnName: 'Movies', isActive: true },
     { btnName: 'TV', isActive: false },
@@ -150,4 +179,10 @@ export class HomePageComponent {
     {btnName: 'TV', isActive: false},
     {btnName: 'Released This Week', isActive: false}
   ];
+
+  buttonOptionsRecommendations: ButtonOptions[] = [
+  {btnName: 'Movies', isActive: true},
+  {btnName: 'Tv-shows', isActive: false}
+    
+  ]
 }

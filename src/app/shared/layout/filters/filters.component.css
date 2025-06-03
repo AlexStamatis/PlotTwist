@@ -1,10 +1,14 @@
 :host {
+  display: block;
+  max-height: 800px;
 
-  
-    .filters {
-        display:flex;
-        width: 300px;
-        color:white;
-        
-    }
+  .filters-title {
+    display: flex;
+    /* border: 1px solid yellow; */
+    width: 300px;
+    color: white;
+    max-height: 700px;
+  }
+
+
 }

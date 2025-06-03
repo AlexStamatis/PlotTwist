@@ -1,7 +1,6 @@
 <div class="movies-container">
-  <div class="filters-wrapper">
-    <app-filters [filterTitle]="'Now Playing'"></app-filters>
-  </div>
+  <app-filters [filterTitle]="'Now Playing'"></app-filters>
+
   @if (nowPlayingMovies().length) {
   <div class="movies-grid-and-button">
     <div class="movies-grid">

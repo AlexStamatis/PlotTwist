@@ -1,7 +1,6 @@
 <div class="movies-container">
-  <div class="filters-wrapper">
-    <app-filters [filterTitle]="'Upcoming'"></app-filters>
-  </div>
+  <app-filters [filterTitle]="'Upcoming'"></app-filters>
+
   @if (upcomingMovies().length) {
   <div class="movies-grid-and-button">
     <div class="movies-grid">

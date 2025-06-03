@@ -16,18 +16,31 @@ export class MoviesPopularComponent {
   popularMovies = signal<any[]>([]);
   currentPage = signal<number>(1);
   totalPages = signal<number>(1);
+  sortOptionPicked = signal<string | null>(null);
 
-  constructor(private tmdbService:TmdbService) {
+  constructor(private tmdbService: TmdbService) {
     this.onloadMovies();
   }
   onloadMovies() {
-    this.tmdbService
-      .getMoviesPopular(this.currentPage())
-      .subscribe((res: any) => {
-        this.popularMovies.update((movies) => [...movies, ...res.results]);
-        this.totalPages.set(res.total_pages);
-      });
+    const page = this.currentPage();
+    const sort = this.sortOptionPicked();
+
+    const fetchMovies = sort
+      ? this.tmdbService.getSortedMovies(sort, page)
+      : this.tmdbService.getMoviesPopular(page);
+
+    fetchMovies.subscribe((res: any) => {
+      this.popularMovies.update((movies) => [...movies, ...res.results]);
+      this.totalPages.set(res.total_pages);
+    });
   }
+  onSearchFromFilters(sortBy: string) {
+    this.sortOptionPicked.set(sortBy);
+    this.currentPage.set(1);
+    this.popularMovies.set([]);
+    this.onloadMovies();
+  }
+
   onLoadNextPages() {
     if (this.currentPage() < this.totalPages()) {
       this.currentPage.update((page) => page + 1);

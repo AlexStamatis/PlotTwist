@@ -1,3 +1,59 @@
-<div class="filters">
-    <h2>{{filterTitle}}</h2>
+<div class="filters-title">
+  <h2>{{ filterTitle }}</h2>
+</div>
+<div ngbAccordion #accordion="ngbAccordion">
+  <div ngbAccordionItem="sort">
+    <h2 ngbAccordionHeader>
+      <button ngbAccordionButton>Sort Results By</button>
+    </h2>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <button
+          class="btn btn-outline-secondary btn-sm"
+          [class.active]="sortSelected() === 'popularity.desc'"
+          (click)="onSortSelected('popularity.desc')"
+        >
+          Popularity Descending
+        </button>
+        <button
+          class="btn btn-outline-secondary btn-sm"
+          [class.active]="sortSelected() === 'popularity.asc'"
+          (click)="onSortSelected('popularity.asc')"
+        >
+          Popularity Ascending
+        </button>
+        <button
+          class="btn btn-outline-secondary btn-sm"
+          [class.active]="sortSelected() === 'primary_release_date.desc'"
+          (click)="onSortSelected('primary_release_date.desc')"
+        >
+          Release Date Descending
+        </button>
+        <button
+          class="btn btn-outline-secondary btn-sm"
+          [class.active]="sortSelected() === 'primary_release_date.asc'"
+          (click)="onSortSelected('primary_release_date.asc')"
+        >
+          Release Date Ascending
+        </button>
+        <button
+          class="btn btn-outline-secondary btn-sm"
+          [class.active]="sortSelected() === 'vote_average.desc'"
+          (click)="onSortSelected('vote_average.desc')"
+        >
+          Rating Descending
+        </button> 
+        <button
+          class="btn btn-outline-secondary btn-sm"
+          [class.active]="sortSelected() === 'vote_average.asc'"
+          (click)="onSortSelected('vote_average.asc')"
+        >
+          Rating Ascending
+        </button>
+         <div class="sort-search-btn">
+          <button class="btn btn-primary" [disabled]="!sortSelected" (click)="onSearch()">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

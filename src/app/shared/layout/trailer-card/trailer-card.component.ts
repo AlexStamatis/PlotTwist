@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { TrailerModalComponent } from '../../modal/trailer-modal.component';
 
 @Component({
   selector: 'app-trailer-card',
   standalone:true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgbModalModule],
   templateUrl: './trailer-card.component.html',
   styleUrl: './trailer-card.component.css'
 })
@@ -21,7 +22,12 @@ export class TrailerCardComponent {
   }
 
   openTrailerModal() {
-
+   const modalRef = this.ngbModal.open(TrailerModalComponent, {
+    size: 'xl',
+    centered: true 
+  })
+   modalRef.componentInstance.modalTitle = this.trailer.title;
+   modalRef.componentInstance.youtubeUrl = this.trailer.key;
   }
 
   get thumbnailUrl() {

@@ -1,34 +1,25 @@
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered modal-xl">
-    <div class="modal-content p-0">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-           style="filter: invert(1);"
-        ></button>
-      </div>
-      <div class="modal-body" >
-        <div class="video-container">
-          <iframe
-            id="youtubeIframe"
-            width="100%"
-            height="100%"
-            src="https://www.youtube.com/embed/5PSzFLV-EyQ"
-            frameborder="0"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
+<div class="modal-content p-0">
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="exampleModalLabel">{{modalTitle}}</h1>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      style="filter: invert(1)"
+      (click)="onClose()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="video-container">
+      <iframe
+        id="youtubeIframe"
+        width="100%"
+        height="100%"
+        [src]="'https://www.youtube.com/embed/' + youtubeUrl | safe"
+        frameborder="0"
+        allowfullscreen
+      ></iframe>
     </div>
   </div>
 </div>

@@ -1,7 +1,9 @@
 <div class="movies-container">
-  <div class="filters-wrapper">
-    <app-filters [filterTitle]="'Popular Movies'"></app-filters>
-  </div>
+  <app-filters
+    (searchBtnClicked)="onSearchFromFilters($event)"
+    [filterTitle]="'Popular Movies'"
+  ></app-filters>
+
   @if (popularMovies().length){
   <div class="movies-grid-and-button">
     <div class="movies-grid">

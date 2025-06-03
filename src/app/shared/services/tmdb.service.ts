@@ -1,5 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
+import { Observable } from 'rxjs';
+
 
 @Injectable()
 export class TmdbService {
@@ -88,5 +90,18 @@ export class TmdbService {
 
   getReleasedThisWeekSeries(fromDate:string, toDate:string) {
     return this.http.get(`${this.baseUrl}/discover/tv?first_air_date.gte=${fromDate}&first_air_date.lte=${toDate}&api_key=${this.apikey}`)
+  }
+
+  getRecommendedMovies(movieId: number) {
+    return this.http.get(`${this.baseUrl}/movie/${movieId}/recommendations?api_key=${this.apikey}&language=en-US`)
+  }
+
+  getRecommendedTvShows(tvId: number) {
+    return this.http.get(`${this.baseUrl}/tv/${tvId}/recommendations?api_key=${this.apikey}&language=en-US`)
+  }
+
+  getSortedMovies( sortBy: string , page:number = 1):Observable<any>{
+    const params = new HttpParams().set('api_key', this.apikey).set('sort_by', sortBy).set('language','en-US').set('page',page.toString());
+    return this.http.get(`${this.baseUrl}/discover/movie`, { params });
   }
 }

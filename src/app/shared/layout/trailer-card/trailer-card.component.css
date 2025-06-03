@@ -4,41 +4,41 @@
     background: white;
     border-radius: 10px;
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .trailer-card img {
+  img {
     width: 100%;
-    height: auto;
     display: block;
-  }
-  .trailer-card:hover {
-    width: 400px;
-    transition: ease-in 0.1s;
+  
   }
 
-  .thumbnail-wrapper{
-    position:relative;
-    display:block;
+
+  .trailer-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .thumbnail-wrapper {
+    position: relative;
+    display: block;
   }
 
   .play-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 36px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 30%;
-  padding: 14px;
-}
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 30%;
+    padding: 14px;
+  }
 
-.title {
+  .title {
     text-wrap: nowrap;
+    font-size: large;
     font-family: cursive;
-   
-    
-    
-    
-}
+  }
 }

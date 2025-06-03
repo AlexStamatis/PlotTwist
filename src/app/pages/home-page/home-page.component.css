@@ -1,7 +1,7 @@
 :host {
   .home-page-container {
     max-width: 1300px;
-    margin:auto;
+    margin: auto;
     /* border:1px solid yellow; */
   }
   h2,
@@ -62,24 +62,46 @@
   .movies-scrollbar {
     display: flex;
     gap: 20px;
-    
+
     overflow: auto;
     white-space: nowrap;
     mask-image: linear-gradient(to right, black 80%, transparent);
     overflow-y: hidden;
   }
 
-    .trailers-scrollbar {
+  .trailers-scrollbar {
     display: flex;
     overflow-x: auto;
-    gap:15px;
-    padding:10px;
+    min-height: 400px;
+    gap: 15px;
+    padding: 10px;
     scroll-behavior: smooth;
-   
+    transition: opacity 0.2s ease-in-out;
   }
 
   .trailers {
     display: flex;
     margin-top: 50px;
+  }
+
+  .recommendation {
+    display: flex;
+    margin-top: 50px;
+  }
+
+    .recommended-scrollbar-container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .recommended-scrollbar {
+    display: flex;
+    gap: 20px;
+
+    overflow: auto;
+    white-space: nowrap;
+    mask-image: linear-gradient(to right, black 80%, transparent);
+    overflow-y: hidden;
   }
 }

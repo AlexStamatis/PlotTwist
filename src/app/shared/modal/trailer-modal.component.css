@@ -1,18 +1,28 @@
-.video-container {
-  height: 600px;
-}
+:host {
+  .video-container {
+    height: 600px;
+  }
 
-.modal-title {
-  opacity: 0.75;
-}
+  .modal-title {
+    opacity: 0.75;
+  }
 
-.modal-header {
-  color: white;
-  background-color: black;
-  border-bottom: none;
-}
+  .modal-content {
+    border: none;
+  }
 
-.modal-body {
-  padding: 5px;
-  background-color: black;
+  .modal-header {
+    color: white;
+    background-color: black;
+    border-bottom: none;
+  }
+
+  .modal-body {
+    padding: 5px;
+    background-color: black;
+  }
+
+  .btn-close:focus {
+    box-shadow: none;
+  }
 }

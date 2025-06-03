@@ -45,20 +45,33 @@
   </div>
   <div class="trailers-scrollbar-container">
     <div class="trailers-scrollbar">
-      @if (mediaTypeTrailers() === 'movies' || mediaTypeTrailers() === 'Released This Week') {
-        @for(trailer of movieTrailers();track trailer.id) {
-          <app-trailer-card [trailer]="trailer"/>
-        }
-      } @else if (mediaTypeTrailers() === 'tv' || mediaTypeTrailers() === 'Released This Week') {
-        @for (trailer of tvTrailers(); track trailer.id) {
-          <app-trailer-card [trailer]="trailer"/>
-        }
-      }
-      
+      @if (mediaTypeTrailers() === 'movies' || mediaTypeTrailers() === 'Released This Week') { @for(trailer of movieTrailers();track trailer.id) {
+      <app-trailer-card [trailer]="trailer" />
+      } } @else if (mediaTypeTrailers() === 'tv' || mediaTypeTrailers() ===
+      'Released This Week') { @for (trailer of tvTrailers(); track trailer.id) {
+      <app-trailer-card [trailer]="trailer" />
+      } }
     </div>
   </div>
-  
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Open Modal
-</button>
+  <div class="recommendation">
+    <p>Plot Twist Recommends</p>
+    <div class="toggle-button">
+      <app-toggle-button
+        [options]="buttonOptionsRecommendations"
+        (optionChanged)="onToggleChangeRecommended($event)"
+      ></app-toggle-button>
+    </div>
+  </div>
+  <div class="recommended-scrollbar-container">
+    <div class="recommended-scrollbar">
+      @for(item of recommendedItems();track item.id) {
+        <app-movie-card 
+        [title]="item.title || item.name"
+        [posterPath]="item.poster_path"
+        [releaseDate]="item.release_date || item.first_air_date"
+        [voteAverage]="item.vote_average"
+        ></app-movie-card>
+      }
+    </div>
+  </div>
 </div>

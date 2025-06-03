@@ -1,7 +1,6 @@
 <div class="movies-container">
-  <div class="filters-wrapper">
-    <app-filters [filterTitle]="'Top Rated'"></app-filters>
-  </div>
+  <app-filters [filterTitle]="'Top Rated'"></app-filters>
+
   @if (topRatedMovies().length) {
   <div class="movies-grid-and-button">
     <div class="movies-grid">

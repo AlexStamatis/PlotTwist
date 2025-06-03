@@ -1,11 +1,11 @@
 <div class="series-container">
-  <div class="filters-wrapper">
-    <app-filters [filterTitle]="'Airing Today'"></app-filters>
-  </div>
+  <app-filters [filterTitle]="'Airing Today'"></app-filters>
+
   @if (airingTodayTvShows().length) {
   <div class="series-grid-and-button">
     <div class="series-grid">
-      @for (airingTodayTvShow of airingTodayTvShows();track airingTodayTvShow.id) {
+      @for (airingTodayTvShow of airingTodayTvShows();track
+      airingTodayTvShow.id) {
       <app-movie-card
         [title]="airingTodayTvShow.original_name"
         [posterPath]="airingTodayTvShow.poster_path"

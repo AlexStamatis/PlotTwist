@@ -1,7 +1,6 @@
 <div class="series-container">
-  <div class="filters-wrapper">
-    <app-filters [filterTitle]="'Top Rated'"></app-filters>
-  </div>
+  <app-filters [filterTitle]="'Top Rated'"></app-filters>
+
   @if (topRatedTvShows().length) {
   <div class="series-grid-and-button">
     <div class="series-grid">

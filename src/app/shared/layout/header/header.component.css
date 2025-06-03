@@ -1,32 +1,25 @@
 :host {
- display: block;
- padding: 15px 0;
+  display: block;
 
-.header-container {
- 
-   max-width: 1300px;
-   flex-wrap:wrap;
-   margin:auto;
-   
-}
-  .main-header {
-    color: rgb(206, 60, 15);
-    font-style: oblique;
+  .header-container {
+    max-width: 1300px;
+    flex-wrap: wrap;
+    margin: auto;
+  }
+  .logo-container {
     cursor: pointer;
-    font-size: 50px;
-    margin-top: 20px;
-    flex-wrap:wrap;
-   
-   
-    
-   
+  }
+
+  p {
+  color: rgb(206, 60, 15);
+  font-size: 50px;
+  font-family:cursive;
   }
   .header-navbar {
-    display:flex;
+    display: flex;
     font-size: 18px;
     justify-content: space-between;
     cursor: pointer;
-    margin-top: 20px;
   }
   .navbar-options {
     font-weight: bold;
@@ -54,6 +47,4 @@
   .fa-user {
     margin-right: 5px;
   }
-
-  
 }

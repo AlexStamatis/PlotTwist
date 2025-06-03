@@ -1,7 +1,6 @@
 <div class="series-container">
-  <div class="filters-wrapper">
-    <app-filters [filterTitle]="'Popular'"></app-filters>
-  </div>
+  <app-filters [filterTitle]="'Popular'"></app-filters>
+
   @if (popularTvShows().length) {
   <div class="series-grid-and-button">
     <div class="series-grid">
