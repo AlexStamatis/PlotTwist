@@ -3,37 +3,85 @@ import { Component, signal } from '@angular/core';
 import { TmdbService } from '../../shared/services/tmdb.service';
 import { MovieCardComponent } from '../../shared/layout/movie-card/movie-card.component';
 import { FiltersComponent } from '../../shared/layout/filters/filters.component';
+import { Movie, MovieResponse } from '../../shared/models/movie.model';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { SpinnerComponent } from "../../shared/layout/spinner/spinner.component";
 
 @Component({
   selector: 'app-movies-popular',
   standalone: true,
-  imports: [CommonModule, MovieCardComponent, FiltersComponent],
+  imports: [CommonModule, MovieCardComponent, FiltersComponent, SpinnerComponent],
   providers: [TmdbService],
   templateUrl: './movies-popular.component.html',
   styleUrl: './movies-popular.component.css',
 })
 export class MoviesPopularComponent {
-  popularMovies = signal<any[]>([]);
+  popularMovies = signal<Movie[]>([]);
   currentPage = signal<number>(1);
   totalPages = signal<number>(1);
   sortOptionPicked = signal<string | null>(null);
+  loading = signal(false);
+  resetFilter = signal(0);
 
-  constructor(private tmdbService: TmdbService) {
+  resetFilters() {
+  this.resetFilter.update(v => v + 1);
+  }
+  constructor(private tmdbService: TmdbService, private router: Router) {
     this.onloadMovies();
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        if (this.router.url === '/movie') {
+          this.sortOptionPicked.set(null);
+          this.currentPage.set(1);
+          this.popularMovies.set([]);
+          this.resetFilters();
+          this.onloadMovies();
+        }
+      });
   }
   onloadMovies() {
+    this.loading.set(true);
     const page = this.currentPage();
     const sort = this.sortOptionPicked();
+    const currentYear = new Date().getFullYear();
+    const nextYear = currentYear + 1;
 
     const fetchMovies = sort
-      ? this.tmdbService.getSortedMovies(sort, page)
+      ? this.tmdbService.getSortedPopularMovies(sort, page)
       : this.tmdbService.getMoviesPopular(page);
 
-    fetchMovies.subscribe((res: any) => {
-      this.popularMovies.update((movies) => [...movies, ...res.results]);
-      this.totalPages.set(res.total_pages);
+    fetchMovies.subscribe({
+      next: (res: MovieResponse) => {
+        this.totalPages.set(res.total_pages);
+
+        const filtered = res.results.filter((movie) => {
+          const year = movie.release_date
+            ? parseInt(movie.release_date.substring(0, 4))
+            : 0;
+
+          const validYear =
+            sort === 'release_date.asc'
+              ? year > 0
+              : year >= 1900 && year <= nextYear;
+
+          return movie.poster_path && movie.vote_average > 0 && validYear;
+        });
+        this.popularMovies.update((movies) => [...movies, ...filtered]);
+        this.currentPage.set(page);
+      },
+      error: (err) => {
+        console.error('Problem in loading Movies', err);
+        this.loading.set(false);
+      },
+      complete: () => {
+        this.loading.set(false);
+      },
     });
   }
+
   onSearchFromFilters(sortBy: string) {
     this.sortOptionPicked.set(sortBy);
     this.currentPage.set(1);

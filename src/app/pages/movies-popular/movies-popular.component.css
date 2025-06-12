@@ -26,6 +26,8 @@
     justify-content: center;
     gap: 20px;
     padding-top: 60px;
+    min-height: 900px; 
+  transition: min-height 0.3s ease;
   }
 
   .load-more-btn {
@@ -43,4 +45,8 @@
   .load-more-btn:hover {
     background-color: rgb(112, 125, 191);
   }
+
+ 
 }
+
+

@@ -1,58 +1,32 @@
 <div class="filters-title">
   <h2>{{ filterTitle }}</h2>
 </div>
-<div ngbAccordion #accordion="ngbAccordion">
-  <div ngbAccordionItem="sort">
+<div ngbAccordion>
+  <div ngbAccordionItem>
     <h2 ngbAccordionHeader>
-      <button ngbAccordionButton>Sort Results By</button>
+      <button ngbAccordionButton> Sort Results By</button>
     </h2>
     <div ngbAccordionCollapse>
       <div ngbAccordionBody>
+        <ng-template>
         <button
-          class="btn btn-outline-secondary btn-sm"
-          [class.active]="sortSelected() === 'popularity.desc'"
-          (click)="onSortSelected('popularity.desc')"
+          *ngFor="let option of sortOptions"
+          class="btn btn-outline-secondary btn-sm me-1 mb-1"
+          [class.active]="option?.value && sortSelected() === option.value"
+          (click)="onSortSelected(option.value)"
         >
-          Popularity Descending
+          {{ option?.label }}
         </button>
-        <button
-          class="btn btn-outline-secondary btn-sm"
-          [class.active]="sortSelected() === 'popularity.asc'"
-          (click)="onSortSelected('popularity.asc')"
-        >
-          Popularity Ascending
-        </button>
-        <button
-          class="btn btn-outline-secondary btn-sm"
-          [class.active]="sortSelected() === 'primary_release_date.desc'"
-          (click)="onSortSelected('primary_release_date.desc')"
-        >
-          Release Date Descending
-        </button>
-        <button
-          class="btn btn-outline-secondary btn-sm"
-          [class.active]="sortSelected() === 'primary_release_date.asc'"
-          (click)="onSortSelected('primary_release_date.asc')"
-        >
-          Release Date Ascending
-        </button>
-        <button
-          class="btn btn-outline-secondary btn-sm"
-          [class.active]="sortSelected() === 'vote_average.desc'"
-          (click)="onSortSelected('vote_average.desc')"
-        >
-          Rating Descending
-        </button> 
-        <button
-          class="btn btn-outline-secondary btn-sm"
-          [class.active]="sortSelected() === 'vote_average.asc'"
-          (click)="onSortSelected('vote_average.asc')"
-        >
-          Rating Ascending
-        </button>
-         <div class="sort-search-btn">
-          <button class="btn btn-primary" [disabled]="!sortSelected" (click)="onSearch()">Search</button>
+           <div class="sort-search-btn">
+          <button
+            class="btn btn-primary"
+            [disabled]="!sortSelected()"
+            (click)="onSearch()"
+          >
+            Search
+          </button>
         </div>
+          </ng-template>
       </div>
     </div>
   </div>

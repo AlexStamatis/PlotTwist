@@ -1,8 +1,13 @@
 <div class="movies-container">
-  <app-filters [filterTitle]="'Top Rated'"></app-filters>
+  <app-filters
+    [filterTitle]="'Top Rated'"
+    (searchBtnClicked)="onSearchFromFilters($event)"
+    [resetOption]="resetFilter()"
+    [contentType]="'movie'"
+  ></app-filters>
 
   @if (topRatedMovies().length) {
-  <div class="movies-grid-and-button">
+  <div class="movies-grid-and-button" [class.fade-in]="!loading()">
     <div class="movies-grid">
       @for (topRatedMovie of topRatedMovies();track topRatedMovie.id) {
       <app-movie-card
@@ -19,3 +24,6 @@
 
   }
 </div>
+@if (loading()) {
+<app-spinner />
+}

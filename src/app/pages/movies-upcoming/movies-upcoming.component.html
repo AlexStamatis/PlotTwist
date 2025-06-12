@@ -1,8 +1,13 @@
 <div class="movies-container">
-  <app-filters [filterTitle]="'Upcoming'"></app-filters>
+  <app-filters
+    [filterTitle]="'Upcoming'"
+    (searchBtnClicked)="onSearchFromFilters($event)"
+    [resetOption]="resetFilter()"
+    [contentType]="'movie'"
+  ></app-filters>
 
   @if (upcomingMovies().length) {
-  <div class="movies-grid-and-button">
+  <div class="movies-grid-and-button" [class.fade-in]="!loading()">
     <div class="movies-grid">
       @for (upcomingMovie of upcomingMovies();track upcomingMovie.id) {
       <app-movie-card
@@ -19,3 +24,6 @@
 
   }
 </div>
+@if (loading()) {
+<app-spinner />
+}

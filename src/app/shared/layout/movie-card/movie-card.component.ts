@@ -10,7 +10,7 @@ import { Component, Input } from '@angular/core';
 })
 export class MovieCardComponent {
 @Input() title! : string;
-@Input() posterPath!:string;
+@Input() posterPath!:string | null;
 @Input() releaseDate!: string;
 @Input() voteAverage!: number;
 }

@@ -19,11 +19,13 @@ export const routes: Routes = [
   {
     path: 'movie',
     component: MoviesPopularComponent,
+    runGuardsAndResolvers: 'always'
   },
 
   {
     path: 'movie/now-playing',
     component: MoviesNowPlayingComponent,
+    runGuardsAndResolvers: 'always'
   },
 
   {

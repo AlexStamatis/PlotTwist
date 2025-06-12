@@ -1,13 +1,19 @@
 :host {
+  max-width: 250px;
   display: block;
-  max-height: 800px;
+  min-height: 100vh;
+  width: 100%;
 
   .filters-title {
     display: flex;
-    /* border: 1px solid yellow; */
+
     width: 300px;
     color: white;
     max-height: 700px;
+  }
+
+  .sort-search-btn {
+    margin-top: 10px;
   }
 
 

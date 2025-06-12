@@ -1,8 +1,13 @@
 <div class="series-container">
-  <app-filters [filterTitle]="'Top Rated'"></app-filters>
+  <app-filters
+    [filterTitle]="'Top Rated'"
+    (searchBtnClicked)="onSearchFromFilters($event)"
+    [resetOption]="resetFilter()"
+    [contentType]="'tv'"
+  ></app-filters>
 
   @if (topRatedTvShows().length) {
-  <div class="series-grid-and-button">
+  <div class="series-grid-and-button" [class.fade-in]="!loading()">
     <div class="series-grid">
       @for (topRatedTvShow of topRatedTvShows();track topRatedTvShow.id) {
       <app-movie-card

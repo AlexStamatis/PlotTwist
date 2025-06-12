@@ -2,10 +2,12 @@
   <app-filters
     (searchBtnClicked)="onSearchFromFilters($event)"
     [filterTitle]="'Popular Movies'"
+    [resetOption] = "resetFilter()"
+    [contentType]="'movie'"
   ></app-filters>
 
   @if (popularMovies().length){
-  <div class="movies-grid-and-button">
+  <div class="movies-grid-and-button" [class.fade-in]="!loading()">
     <div class="movies-grid">
       @for (popularMovie of popularMovies();track popularMovie.id) {
       <app-movie-card
@@ -23,3 +25,6 @@
 
   }
 </div>
+@if (loading()) {
+<app-spinner />
+}
