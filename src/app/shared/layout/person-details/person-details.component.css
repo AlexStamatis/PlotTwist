@@ -1,0 +1,161 @@
+.person-details-container {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  padding: 30px;
+  max-width: 1300px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+.left-side {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.person-image {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.personal-info {
+  width: 100%;
+  background-color: #f5f5f5;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.personal-info p {
+  font-size: 16px;
+}
+
+.right-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-side h1 {
+  max-width: 500px;
+  margin-top: 0;
+  font-size: 32px;
+  color: white;
+}
+
+.right-side h3 {
+  color: white;
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+.biography {
+  margin-bottom: 32px;
+  line-height: 1.5;
+  color: white;
+}
+
+.known-for-movies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.known-for-card {
+  width: 140px;
+  text-align: center;
+}
+
+.known-for-card img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.known-for-card p {
+  margin: 0;
+  font-size: 14px;
+  color: white;
+}
+
+.biography {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  transition: all 0.3s ease;
+}
+
+.biography.clamped {
+  -webkit-line-clamp: 10;
+  line-clamp: 10;
+}
+
+.toggle-bio-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.toggle-bio-btn:hover {
+  background-color: #045ebe;
+}
+
+.credits-container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  color: white;
+}
+
+.credits-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;       
+  max-width: 600px;
+  gap: 10px;
+  
+}
+
+.credit-item {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-size: 16px;
+}
+
+.credit-item .year {
+  font-weight: bold;
+  width: 60px;
+}
+
+.credit-item .role {
+  font-style: italic;
+  color: #e3b7b7;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  
+  
+}
+
+.filters select {
+  background-color: transparent;
+  color: white;
+  font-size: 16px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border: none;
+  cursor: pointer;
+
+}
+
+.filters option {
+  color: black; 
+  background-color: white;
+}

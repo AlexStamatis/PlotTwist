@@ -1,0 +1,108 @@
+.details-container {
+  display: flex;
+  color: white;
+  gap: 15px;
+  padding: 15px;
+  background-color: rgba(20, 20, 40, 0.6);
+}
+
+.poster-wrapper img {
+  width: 300px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-left: 100px;
+}
+
+.info-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.title {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.title .year {
+  font-weight: 400;
+  font-size: 25px;
+  color: #ccc;
+  margin-left: 5px;
+}
+
+.more-info {
+  display: flex;
+  font-size: 15px;
+  gap: 8px;
+  color: #bbb;
+  margin-bottom: 15px;
+}
+
+.bullet {
+  font-size: 15px;
+  padding: 0 5px;
+  color: #c7c7c7;
+}
+
+.rating-badge {
+  background-color: rgba(53, 66, 69, 0.85);
+  color: #f1b903;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+}
+
+.overview {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.crew-info {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.crew-type {
+  margin-bottom: 8px;
+}
+
+a.person-link {
+  color: #42b6d6;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+a.person-link:hover {
+  color: #61c9e6;
+}
+
+.job {
+  font-style: italic;
+  margin-left: 4px;
+}
+
+.cast-container {
+  margin-top: 30px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.cast-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}

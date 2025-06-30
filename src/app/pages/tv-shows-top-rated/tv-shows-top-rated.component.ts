@@ -4,7 +4,10 @@ import { FiltersComponent } from '../../shared/layout/filters/filters.component'
 import { MovieCardComponent } from '../../shared/layout/movie-card/movie-card.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { TvShowResponse } from '../../shared/models/movie.model';
+import {
+  CombinedFiltersSelection,
+  TvShowResponse,
+} from '../../shared/models/movie.model';
 
 @Component({
   selector: 'app-tv-shows-top-rated',
@@ -18,6 +21,7 @@ export class TvShowsTopRatedComponent {
   currentPage = signal<number>(1);
   totalPages = signal<number>(1);
   sortOptionPicked = signal<string | null>(null);
+  genreOptionPicked = signal<number[]>([]);
   loading = signal(false);
   resetFilter = signal(0);
 
@@ -34,6 +38,7 @@ export class TvShowsTopRatedComponent {
       .subscribe(() => {
         if (this.router.url === '/tv/top-rated') {
           this.sortOptionPicked.set(null);
+          this.genreOptionPicked.set([]);
           this.currentPage.set(1);
           this.topRatedTvShows.set([]);
           this.resetFilters();
@@ -45,29 +50,35 @@ export class TvShowsTopRatedComponent {
     this.loading.set(true);
     let page = this.currentPage();
     const sort = this.sortOptionPicked();
+    const genreIds = this.genreOptionPicked();
 
     if (page === 1) {
       this.topRatedTvShows.set([]);
     }
 
     const loadNext = () => {
-      const fetchShows = sort ? this.tmdbService.getSortedTopRatedTvShows(sort , page) : this.tmdbService.getTvShowsTopRated(page);
+      const fetchShows = sort || genreIds.length > 0
+        ? this.tmdbService.getSortedTopRatedTvShows(sort ?? '', page, genreIds)
+        : this.tmdbService.getTvShowsTopRated(page);
 
-      fetchShows.subscribe( {
-        next: (res:TvShowResponse) => {
+      fetchShows.subscribe({
+        next: (res: TvShowResponse) => {
           this.totalPages.set(res.total_pages);
 
           const filtered = res.results.filter((show) => {
             const year = show.first_air_date
               ? parseInt(show.first_air_date.substring(0, 4))
               : 0;
-            const validYear = year >= 1930 && year <= new Date().getFullYear() + 1;
+            const validYear =
+              year >= 1930 && year <= new Date().getFullYear() + 1;
             return !!show.poster_path && show.vote_average > 0 && validYear;
           });
 
           this.topRatedTvShows.update((existing) => {
             const existingIds = new Set(existing.map((item) => item.id));
-            const newItems = filtered.filter(item => !existingIds.has(item.id));
+            const newItems = filtered.filter(
+              (item) => !existingIds.has(item.id)
+            );
             return [...existing, ...newItems];
           });
 
@@ -84,20 +95,23 @@ export class TvShowsTopRatedComponent {
         error: (err) => {
           console.error('Failed to load Top Rated TV Shows:', err);
           this.loading.set(false);
-        }
+        },
       });
-    }
+    };
     loadNext();
   }
 
-  onSearchFromFilters(sortBy: string) {
-    this.sortOptionPicked.set(sortBy);
+  onSearchFromFilters(event: CombinedFiltersSelection) {
+    const sort = event.sort?.trim() || null;
+    const genres = event.genreIds ?? [];
+    this.sortOptionPicked.set(sort);
+    this.genreOptionPicked.set(genres);
     this.currentPage.set(1);
     this.topRatedTvShows.set([]);
     this.onLoadTvSeries();
   }
   onLoadNextPages() {
-     if (this.currentPage() < this.totalPages()) {
+    if (this.currentPage() < this.totalPages()) {
       const previousCount = this.topRatedTvShows().length;
       this.onLoadTvSeries(previousCount + 20);
     }

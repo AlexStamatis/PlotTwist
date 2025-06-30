@@ -4,7 +4,7 @@ import { MovieCardComponent } from '../../shared/layout/movie-card/movie-card.co
 import { FiltersComponent } from '../../shared/layout/filters/filters.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { TvShowResponse } from '../../shared/models/movie.model';
+import { CombinedFiltersSelection, TvShowResponse } from '../../shared/models/movie.model';
 import { SpinnerComponent } from '../../shared/layout/spinner/spinner.component';
 
 @Component({
@@ -19,6 +19,8 @@ export class TvShowsPopularComponent {
   currentPage = signal<number>(1);
   totalPages = signal<number>(1);
   sortOptionPicked = signal<string | null>(null);
+  genreOptionPicked = signal<number[]>([]);
+
   loading = signal(false);
   resetFilter = signal(0);
 
@@ -33,6 +35,7 @@ export class TvShowsPopularComponent {
       .subscribe((event) => {
         if (this.router.url === '/tv') {
           this.sortOptionPicked.set(null);
+          this.genreOptionPicked.set([]);
           this.currentPage.set(1);
           this.popularTvShows.set([]);
           this.resetFilters();
@@ -44,11 +47,12 @@ export class TvShowsPopularComponent {
     this.loading.set(true);
     const page = this.currentPage();
     const sort = this.sortOptionPicked();
+    const genreIds = this.genreOptionPicked();
     const currentYear = new Date().getFullYear();
     const nextYear = currentYear + 1;
 
-    const fetchSeries = sort
-      ? this.tmdbService.getSortedPopularTvShows(sort, page)
+    const fetchSeries = sort || genreIds.length > 0
+      ? this.tmdbService.getSortedPopularTvShows(sort ?? '', page, genreIds)
       : this.tmdbService.getPopularTvShows(page);
 
     fetchSeries.subscribe({
@@ -90,7 +94,7 @@ export class TvShowsPopularComponent {
             return [...existing, ...newItems];
           });
         }
-        
+
         this.currentPage.set(page);
       },
       error: (err) => {
@@ -102,8 +106,11 @@ export class TvShowsPopularComponent {
       },
     });
   }
-  onSearchFromFilters(sortBy: string) {
-    this.sortOptionPicked.set(sortBy);
+  onSearchFromFilters(event: CombinedFiltersSelection) {
+    const sort = event.sort?.trim() || null;
+    const genres = event.genreIds ?? [];
+    this.sortOptionPicked.set(sort);
+    this.genreOptionPicked.set(genres);
     this.currentPage.set(1);
     this.popularTvShows.set([]);
     this.onLoadSeries();

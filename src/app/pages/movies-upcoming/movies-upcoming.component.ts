@@ -4,7 +4,10 @@ import { FiltersComponent } from '../../shared/layout/filters/filters.component'
 import { MovieCardComponent } from '../../shared/layout/movie-card/movie-card.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { MovieResponse } from '../../shared/models/movie.model';
+import {
+  CombinedFiltersSelection,
+  MovieResponse,
+} from '../../shared/models/movie.model';
 import { SpinnerComponent } from '../../shared/layout/spinner/spinner.component';
 
 @Component({
@@ -19,6 +22,7 @@ export class MoviesUpcomingComponent {
   currentPage = signal<number>(1);
   totalPages = signal<number>(1);
   sortOptionPicked = signal<string | null>(null);
+  genreOptionPicked = signal<number[]>([]);
   loading = signal(false);
   resetFilter = signal(0);
 
@@ -33,6 +37,7 @@ export class MoviesUpcomingComponent {
       .subscribe((event) => {
         if (this.router.url === '/movie/upcoming') {
           this.sortOptionPicked.set(null);
+          this.genreOptionPicked.set([])
           this.currentPage.set(1);
           this.upcomingMovies.set([]);
           this.resetFilters();
@@ -44,10 +49,10 @@ export class MoviesUpcomingComponent {
     this.loading.set(true);
     const page = this.currentPage();
     const sort = this.sortOptionPicked();
-    const today = new Date();
+    const genreIds = this.genreOptionPicked();
 
-    const fetchMovies = sort
-      ? this.tmdbService.getSortedUpcomingMovies(sort, page)
+    const fetchMovies = sort || genreIds.length > 0
+      ? this.tmdbService.getSortedUpcomingMovies(sort ?? '', page, genreIds)
       : this.tmdbService.getUpcomingMovies(page);
 
     fetchMovies.subscribe({
@@ -58,25 +63,13 @@ export class MoviesUpcomingComponent {
           (movie) => !!movie.poster_path && !!movie.release_date
         );
 
-        if (sort === 'primary_release_date.asc') {
-          filtered = filtered.sort((a, b) =>
-            a.release_date.localeCompare(b.release_date)
+        this.upcomingMovies.update((movies) => {
+          const existingIds = new Set(movies.map((movie) => movie.id));
+          const newUniqueMovies = filtered.filter(
+            (movie) => !existingIds.has(movie.id)
           );
-        } else if (sort === 'primary_release_date.desc') {
-          filtered = filtered.sort((a, b) =>
-            b.release_date.localeCompare(a.release_date)
-          );
-        } else if (sort === 'vote_average.asc') {
-          filtered = filtered.sort((a, b) => a.vote_average - b.vote_average);
-        } else if (sort === 'vote_average.desc') {
-          filtered = filtered.sort((a, b) => b.vote_average - a.vote_average);
-        } else if (sort === 'popularity.asc') {
-          filtered = filtered.sort((a, b) => a.popularity - b.popularity);
-        } else if (sort === 'popularity.desc') {
-          filtered = filtered.sort((a, b) => b.popularity - a.popularity);
-        }
-
-        this.upcomingMovies.update((movies) => [...movies, ...filtered]);
+          return [...movies, ...newUniqueMovies];
+        });
         this.currentPage.set(page);
       },
       error: (err) => {
@@ -89,8 +82,11 @@ export class MoviesUpcomingComponent {
     });
   }
 
-  onSearchFromFilters(sortBy: string) {
-    this.sortOptionPicked.set(sortBy);
+  onSearchFromFilters(event: CombinedFiltersSelection) {
+    const sort = event.sort?.trim() || null;
+    const genres = event.genreIds ?? [];
+    this.sortOptionPicked.set(sort);
+    this.genreOptionPicked.set(genres);
     this.currentPage.set(1);
     this.upcomingMovies.set([]);
     this.onLoadMovies();

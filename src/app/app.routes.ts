@@ -62,6 +62,21 @@ export const routes: Routes = [
     path: 'people',
     component: PopularPeopleComponent,
   },
+
+  {
+    path: 'person/:id',
+    loadComponent: () => import('./shared/layout/person-details/person-details.component').then((m)=> m.PersonDetailsComponent),  //lazy loading
+  },
+
+  {
+    path: 'movie/:id',
+    loadComponent: () => import('./shared/layout/movie-details/movie-details.component').then((m) => m.MovieDetailsComponent),
+  },
+
+  {
+    path: 'tv/:id',
+    loadComponent: () => import('./shared/layout/movie-details/movie-details.component').then((m) => m.MovieDetailsComponent),
+  }
 ];
 
 export default routes;

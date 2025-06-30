@@ -18,6 +18,10 @@
     border-radius: 10px;
   }
 
+  .profile:hover {
+    cursor:pointer;
+  }
+
   .person-details {
     display: flex;
     flex-direction: column;

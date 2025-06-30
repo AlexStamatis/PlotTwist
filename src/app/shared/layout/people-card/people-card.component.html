@@ -2,6 +2,7 @@
   <img
     class="profile"
     [src]="'https://image.tmdb.org/t/p/w185' + person.profile_path"
+    (click)="goToPersonDetails(person.id)"
     alt="{{ person.name }}"
   />
   <div class="person-details">

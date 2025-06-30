@@ -1,12 +1,20 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MovieResponse, TvShowResponse } from '../models/movie.model';
+import {
+  GenreResponse,
+  MovieResponse,
+  TvShowResponse,
+} from '../models/movie.model';
 
 @Injectable()
 export class TmdbService {
   private apikey = 'f041c326048aa835b14568059e58dc43';
   private baseUrl = 'https://api.themoviedb.org/3';
+
+  private defaultParams = new HttpParams()
+    .set('api_key', 'f041c326048aa835b14568059e58dc43')
+    .set('language', 'en-US');
 
   constructor(private http: HttpClient) {}
 
@@ -129,24 +137,30 @@ export class TmdbService {
 
   getSortedPopularMovies(
     sortBy: string,
-    page: number = 1
+    page: number = 1,
+    genreIds: number[] = []
   ): Observable<MovieResponse> {
     const currentYear = new Date().getFullYear();
     const nextYear = currentYear + 1;
     let params = new HttpParams()
 
       .set('api_key', this.apikey)
-      .set('sort_by', sortBy)
       .set('language', 'en-US')
       .set('page', page.toString())
       .set('vote_count.gte', '100');
 
+    if (sortBy) {
+      params = params.set('sort_by', sortBy);
+    }
+
     if (sortBy !== 'release_date.asc') {
-      const currentYear = new Date().getFullYear();
-      const nextYear = currentYear + 1;
       params = params
         .set('primary_release_date.gte', '1930-01-01')
         .set('primary_release_date.lte', `${nextYear}-12-31`);
+    }
+
+    if (genreIds?.length) {
+      params = params.set('with_genres', genreIds.join(','));
     }
 
     return this.http.get<MovieResponse>(`${this.baseUrl}/discover/movie`, {
@@ -156,23 +170,28 @@ export class TmdbService {
 
   getSortedNowPlayingMovies(
     sortBy: string,
-    page: number = 1
+    page: number = 1,
+    genreIds: number[] = []
   ): Observable<MovieResponse> {
-    const nextYear = new Date().getFullYear() + 1;
+    const today = new Date();
+    const twoMonthsAgo = new Date();
+    twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
+
     let params = new HttpParams()
       .set('api_key', this.apikey)
-      .set('sort_by', sortBy)
       .set('language', 'en-Us')
       .set('page', page.toString())
-      .set('vote_count.gte', '100');
-
-    const today = new Date();
-    const oneMonthAgo = new Date();
-    oneMonthAgo.setMonth(today.getMonth() - 1);
-
-    params = params
-      .set('primary_release_date.gte', oneMonthAgo.toISOString().split('T')[0])
+      .set('vote_count.gte', '10')
+      .set('primary_release_date.gte', twoMonthsAgo.toISOString().split('T')[0])
       .set('primary_release_date.lte', today.toISOString().split('T')[0]);
+
+    if (sortBy) {
+      params = params.set('sort_by', sortBy);
+    }
+
+    if (genreIds?.length) {
+      params = params.set('with_genres', genreIds.join(','));
+    }
 
     return this.http.get<MovieResponse>(`${this.baseUrl}/discover/movie`, {
       params,
@@ -181,11 +200,11 @@ export class TmdbService {
 
   getSortedTopRatedMovie(
     sortBy: string,
-    page: number = 1
+    page: number = 1,
+    genreIds: number[] = []
   ): Observable<MovieResponse> {
     let params = new HttpParams()
       .set('api_key', this.apikey)
-      .set('sort_by', sortBy)
       .set('language', 'en-US')
       .set('page', page.toString())
       .set('vote_count.gte', '500')
@@ -198,6 +217,12 @@ export class TmdbService {
       .set('primary_release_date.gte', `${earliestYear}-01-01`)
       .set('primary_release_date.lte', `${nextYear}-12-31`);
 
+    if (sortBy) {
+      params = params.set('sort_by', sortBy);
+    }
+    if (genreIds?.length) {
+      params = params.set('with_genres', genreIds.join(','));
+    }
     return this.http.get<MovieResponse>(`${this.baseUrl}/discover/movie`, {
       params,
     });
@@ -205,7 +230,8 @@ export class TmdbService {
 
   getSortedUpcomingMovies(
     sortBy: string,
-    page: number = 1
+    page: number = 1,
+    genreIds: number[] = []
   ): Observable<MovieResponse> {
     const today = new Date();
     const futureDate = new Date();
@@ -216,13 +242,20 @@ export class TmdbService {
 
     let params = new HttpParams()
       .set('api_key', this.apikey)
-      .set('sort_by', 'popularity.desc')
       .set('language', 'en-US')
       .set('page', page.toString())
       .set('include_adult', 'false')
       .set('primary_release_date.gte', todayFixed)
       .set('primary_release_date.lte', futureFixed)
       .set('with_release_type', '3|2');
+
+    if (sortBy) {
+      params = params.set('sort_by', sortBy);
+    }
+
+    if (genreIds?.length) {
+      params = params.set('with_genres', genreIds.join(','));
+    }
 
     return this.http.get<MovieResponse>(`${this.baseUrl}/discover/movie`, {
       params,
@@ -231,20 +264,28 @@ export class TmdbService {
 
   getSortedPopularTvShows(
     sortBy: string,
-    page: number = 1
+    page: number = 1,
+    genreIds: number[] = []
   ): Observable<TvShowResponse> {
     const currentYear = new Date().getFullYear();
     const nextYear = currentYear + 1;
 
     let params = new HttpParams()
       .set('api_key', this.apikey)
-      .set('sort_by', sortBy)
       .set('language', 'en-US')
       .set('page', page.toString())
       .set('vote_count.gte', '100')
       .set('include_null_first_air_dates', 'false')
       .set('first_air_date.gte', '1930-01-01')
       .set('first_air_date.lte', `${nextYear}-12-31`);
+
+    if (sortBy) {
+      params = params.set('sort_by', sortBy);
+    }
+
+    if (genreIds?.length) {
+      params = params.set('with_genres', genreIds.join(','));
+    }
 
     return this.http.get<TvShowResponse>(`${this.baseUrl}/discover/tv`, {
       params,
@@ -253,21 +294,27 @@ export class TmdbService {
 
   getSortedAiringTodayTvShows(
     sortBy: string,
-    page: number = 1
+    page: number = 1,
+    genreIds: number[] = []
   ): Observable<TvShowResponse> {
     const today = new Date();
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(today.getMonth() - 1);
 
-    const nextYear = today.getFullYear() + 1;
-
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('api_key', this.apikey)
       .set('language', 'en-US')
-      .set('sort_by', sortBy)
       .set('page', page.toString())
       .set('first_air_date.gte', oneMonthAgo.toISOString().split('T')[0])
       .set('first_air_date.lte', today.toISOString().split('T')[0]);
+
+    if (sortBy) {
+      params = params.set('sort_by', sortBy);
+    }
+
+    if (genreIds?.length) {
+      params = params.set('with_genres', genreIds.join(','));
+    }
 
     return this.http.get<TvShowResponse>(`${this.baseUrl}/discover/tv`, {
       params,
@@ -276,19 +323,27 @@ export class TmdbService {
 
   getSortedOnTvShows(
     sortBy: string,
-    page: number = 1
+    page: number = 1,
+    genreIds: number[] = []
   ): Observable<TvShowResponse> {
     const today = new Date();
     const oneMonthAgo = new Date();
     oneMonthAgo.setMonth(today.getMonth() - 1);
 
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('api_key', this.apikey)
       .set('language', 'en-US')
-      .set('sort_by', sortBy)
       .set('page', page.toString())
       .set('first_air_date.gte', oneMonthAgo.toISOString().split('T')[0])
       .set('first_air_date.lte', today.toISOString().split('T')[0]);
+
+    if (sortBy) {
+      params = params.set('sort_by', sortBy);
+    }
+
+    if (genreIds?.length) {
+      params = params.set('with_genres', genreIds.join(','));
+    }
 
     return this.http.get<TvShowResponse>(`${this.baseUrl}/discover/tv`, {
       params,
@@ -297,19 +352,73 @@ export class TmdbService {
 
   getSortedTopRatedTvShows(
     sortBy: string,
-    page: number = 1
+    page: number = 1,
+    genreIds: number[] = []
   ): Observable<TvShowResponse> {
     const today = new Date();
 
     let params = new HttpParams()
       .set('api_key', this.apikey)
       .set('language', 'en-US')
-      .set('sort_by', sortBy)
       .set('vote_count.gte', '100')
       .set('page', page.toString())
       .set('first_air_date.gte', '1930-01-01')
       .set('first_air_date.lte', 'today');
 
-      return this.http.get<TvShowResponse>(`${this.baseUrl}/discover/tv`, { params });
+    if (sortBy) {
+      params = params.set('sort_by', sortBy);
+    }
+
+    if (genreIds?.length) {
+      params = params.set('with_genres', genreIds.join(','));
+    }
+
+    return this.http.get<TvShowResponse>(`${this.baseUrl}/discover/tv`, {
+      params,
+    });
+  }
+
+  getMovieGenres(): Observable<GenreResponse> {
+    return this.http.get<GenreResponse>(`${this.baseUrl}/genre/movie/list`, {
+      params: this.defaultParams,
+    });
+  }
+
+  getTvGenres(): Observable<GenreResponse> {
+    return this.http.get<GenreResponse>(`${this.baseUrl}/genre/tv/list`, {
+      params: this.defaultParams,
+    });
+  }
+
+  getPersonDetails(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/person/${id}}`, {
+      params: this.defaultParams,
+    });
+  }
+
+  getPersonCredits(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/person/${id}/combined_credits`, {
+      params: this.defaultParams,
+    });
+  }
+
+  getMovieDetails(mediaType: 'movie' | 'tv', id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${mediaType}/${id}`, {
+      params: this.defaultParams,
+    });
+  }
+
+  getCredits(mediaType: 'movie' | 'tv', id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${mediaType}/${id}/credits`, {
+      params: this.defaultParams,
+    });
+  }
+
+  multiSearch(query:string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/search/multi`, {
+      params: new HttpParams()
+      .set('api_key', this.apikey)
+      .set('query', query),
+    })
   }
 }

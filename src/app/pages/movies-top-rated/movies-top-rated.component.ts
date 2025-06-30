@@ -4,7 +4,10 @@ import { FiltersComponent } from '../../shared/layout/filters/filters.component'
 import { MovieCardComponent } from '../../shared/layout/movie-card/movie-card.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { MovieResponse } from '../../shared/models/movie.model';
+import {
+  CombinedFiltersSelection,
+  MovieResponse,
+} from '../../shared/models/movie.model';
 import { SpinnerComponent } from '../../shared/layout/spinner/spinner.component';
 
 @Component({
@@ -19,6 +22,7 @@ export class MoviesTopRatedComponent {
   currentPage = signal<number>(1);
   totalPages = signal<number>(1);
   sortOptionPicked = signal<string | null>(null);
+  genreOptionPicked = signal<number[]>([]);
   loading = signal(false);
   resetFilter = signal(0);
 
@@ -33,6 +37,7 @@ export class MoviesTopRatedComponent {
       .subscribe((event) => {
         if (this.router.url === '/movie/top-rated') {
           this.sortOptionPicked.set(null);
+          this.genreOptionPicked.set([])
           this.currentPage.set(1);
           this.topRatedMovies.set([]);
           this.resetFilters();
@@ -45,11 +50,12 @@ export class MoviesTopRatedComponent {
     this.loading.set(true);
     const page = this.currentPage();
     const sort = this.sortOptionPicked();
+    const genreIds = this.genreOptionPicked();
     const currentYear = new Date().getFullYear();
     const nextYear = currentYear + 1;
 
-    const fetchMovies = sort
-      ? this.tmdbService.getSortedTopRatedMovie(sort, page)
+    const fetchMovies = sort || genreIds.length > 0
+      ? this.tmdbService.getSortedTopRatedMovie(sort ?? '', page, genreIds)
       : this.tmdbService.getTopRatedMovies(page);
 
     fetchMovies.subscribe({
@@ -68,7 +74,13 @@ export class MoviesTopRatedComponent {
 
           return movie.poster_path && movie.vote_average > 0 && validYear;
         });
-        this.topRatedMovies.update((movies) => [...movies, ...filtered]);
+        this.topRatedMovies.update((movies) => {
+          const existingIds = new Set(movies.map((movie) => movie.id));
+          const newUniqueMovies = filtered.filter(
+            (movie) => !existingIds.has(movie.id)
+          );
+          return [...movies, ...newUniqueMovies];
+        });
         this.currentPage.set(page);
       },
       error: (err) => {
@@ -81,8 +93,11 @@ export class MoviesTopRatedComponent {
     });
   }
 
-  onSearchFromFilters(sortBy: string) {
-    this.sortOptionPicked.set(sortBy);
+  onSearchFromFilters(event: CombinedFiltersSelection) {
+    const sort = event.sort?.trim() || null;
+    const genres = event.genreIds ?? [];
+    this.sortOptionPicked.set(sort);
+    this.genreOptionPicked.set(genres);
     this.currentPage.set(1);
     this.topRatedMovies.set([]);
     this.onLoadMovies();

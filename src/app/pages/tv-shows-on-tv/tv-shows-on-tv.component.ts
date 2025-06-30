@@ -4,8 +4,11 @@ import { FiltersComponent } from '../../shared/layout/filters/filters.component'
 import { MovieCardComponent } from '../../shared/layout/movie-card/movie-card.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { TvShowResponse } from '../../shared/models/movie.model';
-import { SpinnerComponent } from "../../shared/layout/spinner/spinner.component";
+import {
+  CombinedFiltersSelection,
+  TvShowResponse,
+} from '../../shared/models/movie.model';
+import { SpinnerComponent } from '../../shared/layout/spinner/spinner.component';
 
 @Component({
   selector: 'app-tv-shows-on-tv',
@@ -19,6 +22,8 @@ export class TvShowsOnTvComponent {
   currentPage = signal<number>(1);
   totalPages = signal<number>(1);
   sortOptionPicked = signal<string | null>(null);
+  genreOptionPicked = signal<number[]>([]);
+
   loading = signal(false);
   resetFilter = signal(0);
 
@@ -32,6 +37,7 @@ export class TvShowsOnTvComponent {
       .subscribe((event) => {
         if (this.router.url === '/tv/on-tv') {
           this.sortOptionPicked.set(null);
+          this.genreOptionPicked.set([]);
           this.currentPage.set(1);
           this.showsOnTv.set([]);
           this.resetFilters();
@@ -43,14 +49,15 @@ export class TvShowsOnTvComponent {
     this.loading.set(true);
     let page = this.currentPage();
     const sort = this.sortOptionPicked();
+    const genreIds = this.genreOptionPicked();
 
     if (page === 1) {
       this.showsOnTv.set([]);
     }
 
     const loadNext = () => {
-      const fetchShows = sort
-        ? this.tmdbService.getSortedOnTvShows(sort, page)
+      const fetchShows = sort || genreIds.length > 0
+        ? this.tmdbService.getSortedOnTvShows(sort ?? '', page, genreIds)
         : this.tmdbService.getTvShowsOnTv(page);
 
       fetchShows.subscribe({
@@ -67,7 +74,9 @@ export class TvShowsOnTvComponent {
 
           this.showsOnTv.update((existing) => {
             const existingIds = new Set(existing.map((item) => item.id));
-            const newItems = filtered.filter((item) => !existingIds.has(item.id));
+            const newItems = filtered.filter(
+              (item) => !existingIds.has(item.id)
+            );
             return [...existing, ...newItems];
           });
 
@@ -76,7 +85,7 @@ export class TvShowsOnTvComponent {
           if (currentCount < minCount && page < res.total_pages) {
             page++;
             this.currentPage.set(page);
-            loadNext()
+            loadNext();
           } else {
             this.currentPage.set(page);
             this.loading.set(false);
@@ -91,8 +100,11 @@ export class TvShowsOnTvComponent {
     loadNext();
   }
 
-  onSearchFromFilters (sortBy: string) {
-    this.sortOptionPicked.set(sortBy);
+  onSearchFromFilters(event: CombinedFiltersSelection) {
+    const sort = event.sort?.trim() || null;
+    const genres = event.genreIds ?? [];
+    this.sortOptionPicked.set(sort);
+    this.genreOptionPicked.set(genres);
     this.currentPage.set(1);
     this.showsOnTv.set([]);
     this.onLoadSeries();

@@ -5,7 +5,7 @@ import { MovieCardComponent } from '../../shared/layout/movie-card/movie-card.co
 import { FiltersComponent } from '../../shared/layout/filters/filters.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { TvShowResponse } from '../../shared/models/movie.model';
+import { CombinedFiltersSelection, TvShowResponse } from '../../shared/models/movie.model';
 import { SpinnerComponent } from '../../shared/layout/spinner/spinner.component';
 
 @Component({
@@ -20,6 +20,8 @@ export class TvShowsAiringTodayComponent {
   currentPage = signal<number>(1);
   totalPages = signal<number>(1);
   sortOptionPicked = signal<string | null>(null);
+  genreOptionPicked = signal<number[]>([]);
+
   loading = signal(false);
   resetFilter = signal(0);
 
@@ -34,6 +36,7 @@ export class TvShowsAiringTodayComponent {
       .subscribe((event) => {
         if (this.router.url === '/tv/airing-today') {
           this.sortOptionPicked.set(null);
+          this.genreOptionPicked.set([]);
           this.currentPage.set(1);
           this.airingTodayTvShows.set([]);
           this.resetFilters();
@@ -47,13 +50,14 @@ export class TvShowsAiringTodayComponent {
 
     let page = this.currentPage();
     const sort = this.sortOptionPicked();
+    const genreIds = this.genreOptionPicked();
 
     if (page === 1) {
       this.airingTodayTvShows.set([]);
     }
     const loadNext = () => {
-      const fetchShows = sort
-        ? this.tmdbService.getSortedAiringTodayTvShows(sort, page)
+      const fetchShows = sort || genreIds.length > 0
+        ? this.tmdbService.getSortedAiringTodayTvShows(sort ?? '', page, genreIds)
         : this.tmdbService.getAiringTodayTvShows(page);
 
       fetchShows.subscribe({
@@ -80,7 +84,7 @@ export class TvShowsAiringTodayComponent {
           if (currentCount < minCount && page < res.total_pages) {
             page++;
             this.currentPage.set(page);
-            loadNext(); // Recursive call
+            loadNext(); 
           } else {
             this.currentPage.set(page); // Update after all done
             this.loading.set(false);
@@ -95,8 +99,11 @@ export class TvShowsAiringTodayComponent {
     loadNext();
   }
 
-  onSearchFromFilters(sortBy: string) {
-    this.sortOptionPicked.set(sortBy);
+  onSearchFromFilters(event: CombinedFiltersSelection) {
+    const sort = event.sort?.trim() || null;
+    const genres = event.genreIds ?? [];
+    this.sortOptionPicked.set(sort);
+    this.genreOptionPicked.set(genres);
     this.currentPage.set(1);
     this.airingTodayTvShows.set([]);
     this.onLoadSeries();

@@ -3,7 +3,7 @@ import { Component, signal } from '@angular/core';
 import { TmdbService } from '../../shared/services/tmdb.service';
 import { MovieCardComponent } from '../../shared/layout/movie-card/movie-card.component';
 import { FiltersComponent } from '../../shared/layout/filters/filters.component';
-import { Movie, MovieResponse } from '../../shared/models/movie.model';
+import { CombinedFiltersSelection, Movie, MovieResponse } from '../../shared/models/movie.model';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { SpinnerComponent } from "../../shared/layout/spinner/spinner.component";
@@ -21,6 +21,7 @@ export class MoviesPopularComponent {
   currentPage = signal<number>(1);
   totalPages = signal<number>(1);
   sortOptionPicked = signal<string | null>(null);
+  genreOptionPicked = signal<number[]>([]);
   loading = signal(false);
   resetFilter = signal(0);
 
@@ -35,10 +36,12 @@ export class MoviesPopularComponent {
       .subscribe((event) => {
         if (this.router.url === '/movie') {
           this.sortOptionPicked.set(null);
+          this.genreOptionPicked.set([]);
           this.currentPage.set(1);
           this.popularMovies.set([]);
           this.resetFilters();
           this.onloadMovies();
+         
         }
       });
   }
@@ -46,11 +49,12 @@ export class MoviesPopularComponent {
     this.loading.set(true);
     const page = this.currentPage();
     const sort = this.sortOptionPicked();
+    const genreIds = this.genreOptionPicked();
     const currentYear = new Date().getFullYear();
     const nextYear = currentYear + 1;
 
-    const fetchMovies = sort
-      ? this.tmdbService.getSortedPopularMovies(sort, page)
+    const fetchMovies = sort|| genreIds.length > 0
+      ? this.tmdbService.getSortedPopularMovies(sort ?? '', page, genreIds)
       : this.tmdbService.getMoviesPopular(page);
 
     fetchMovies.subscribe({
@@ -69,7 +73,11 @@ export class MoviesPopularComponent {
 
           return movie.poster_path && movie.vote_average > 0 && validYear;
         });
-        this.popularMovies.update((movies) => [...movies, ...filtered]);
+        this.popularMovies.update((movies) => {
+          const existingIds = new Set(movies.map((movie) => movie.id));
+          const newUniqueMovies = filtered.filter((movie) => !existingIds.has(movie.id));
+          return [...movies, ...newUniqueMovies];
+        })
         this.currentPage.set(page);
       },
       error: (err) => {
@@ -82,8 +90,11 @@ export class MoviesPopularComponent {
     });
   }
 
-  onSearchFromFilters(sortBy: string) {
-    this.sortOptionPicked.set(sortBy);
+  onSearchFromFilters(event: CombinedFiltersSelection) {
+    const sort = event.sort?.trim() || null;
+    const genres = event.genreIds ?? [];
+    this.sortOptionPicked.set(sort);
+    this.genreOptionPicked.set(genres);
     this.currentPage.set(1);
     this.popularMovies.set([]);
     this.onloadMovies();
