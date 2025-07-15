@@ -19,22 +19,23 @@
   }
 
   .search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     position: relative;
     border-radius: 50px;
+    flex-wrap: nowrap;
   }
 
   .search-input {
+    flex-grow: 1;
     border-radius: 50px;
-    padding-left: 45px;
+    padding-left: 20px;
     padding-right: 20px;
     height: 50px;
   }
 
   .search-button {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
     border-radius: 50px;
     padding: 8px 20px;
     transition: all 0.3s ease;
@@ -89,7 +90,7 @@
     margin-top: 50px;
   }
 
-    .recommended-scrollbar-container {
+  .recommended-scrollbar-container {
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -104,4 +105,17 @@
     mask-image: linear-gradient(to right, black 80%, transparent);
     overflow-y: hidden;
   }
+
+  .clear-button {
+    height: 40px;
+    padding: 8px 15px;
+  }
+
+  app-search-results {
+  margin-top: 30px;
+  display: block;
+  background-color: #111;
+  padding: 20px;
+  border-radius: 12px;
+}
 }

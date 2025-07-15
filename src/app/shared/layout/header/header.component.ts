@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DropdownComponent } from '../dropdown/dropdown.component';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -34,7 +35,7 @@ export class HeaderComponent {
     },
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   onDropdownSelect(category: string, option: string) {
  const route = this.routeMap[category]?.[option];
@@ -44,5 +45,17 @@ export class HeaderComponent {
 }
  sendHome() {
   this.router.navigate(['/']);
+ }
+
+ startLogin() {
+  this.authService.requestToken().subscribe({
+    next: (res:any) => {
+      const requestToken = res.request_token;
+      this.authService.redirectToTmdbAuth(requestToken);
+    },
+    error: (err) => {
+      console.error('Error requesting token', err);
+    }
+  })
  }
 }

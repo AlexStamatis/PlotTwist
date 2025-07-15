@@ -10,6 +10,7 @@ import { TvShowsAiringTodayComponent } from './pages/tv-shows-airing-today/tv-sh
 import { TvShowsOnTvComponent } from './pages/tv-shows-on-tv/tv-shows-on-tv.component';
 import { TvShowsTopRatedComponent } from './pages/tv-shows-top-rated/tv-shows-top-rated.component';
 import { PopularPeopleComponent } from './pages/popular-people/popular-people.component';
+import { AuthDoneComponent } from './auth/auth-done/auth-done.component';
 
 export const routes: Routes = [
   {
@@ -76,7 +77,18 @@ export const routes: Routes = [
   {
     path: 'tv/:id',
     loadComponent: () => import('./shared/layout/movie-details/movie-details.component').then((m) => m.MovieDetailsComponent),
-  }
+  },
+
+  {
+    path: 'search',
+    loadComponent: () => import('./shared/layout/search-results/search-results.component').then((m) => m.SearchResultsComponent),
+    },
+
+  {
+    path: 'auth/done',
+    loadComponent: () => import('./auth/auth-done/auth-done.component').then(m => m.AuthDoneComponent),
+  } 
+  
 ];
 
 export default routes;

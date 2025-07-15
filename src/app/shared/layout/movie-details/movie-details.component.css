@@ -92,6 +92,10 @@ a.person-link:hover {
 
 .cast-container {
   margin-top: 30px;
+  margin-left: 110px;
+     max-width: 1200px;
+    flex-wrap: wrap;
+   
 }
 
 .section-title {

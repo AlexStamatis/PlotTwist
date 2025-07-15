@@ -6,11 +6,12 @@ import {
   MovieResponse,
   TvShowResponse,
 } from '../models/movie.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class TmdbService {
-  private apikey = 'f041c326048aa835b14568059e58dc43';
-  private baseUrl = 'https://api.themoviedb.org/3';
+  private apikey = environment.tmdbApiKey;
+  private baseUrl = environment.tmdbBaseUrl;
 
   private defaultParams = new HttpParams()
     .set('api_key', 'f041c326048aa835b14568059e58dc43')
@@ -414,11 +415,14 @@ export class TmdbService {
     });
   }
 
-  multiSearch(query:string): Observable<any> {
+  multiSearch(query:string, page:number = 1): Observable<any> {
     return this.http.get(`${this.baseUrl}/search/multi`, {
-      params: new HttpParams()
-      .set('api_key', this.apikey)
-      .set('query', query),
+      params:{
+      api_key: this.apikey,
+      query,
+      page,
+      include_adult: false,
+    },
     })
   }
 }
