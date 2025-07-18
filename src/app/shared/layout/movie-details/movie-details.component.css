@@ -110,3 +110,69 @@ a.person-link:hover {
   flex-wrap: wrap;
   gap: 16px;
 }
+
+.actions-container {
+  display:flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.action-button {
+  display:flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(40, 40, 60, 0.6);
+  border: 1px solid #555;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: #ddd;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.action-button:hover {
+  background-color: rgba(80, 80, 120, 0.8);
+  color: white;
+  transform: scale(1.02);
+}
+
+.icon {
+  font-size: 1.2rem;
+  color: #f1b903;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.rating-label {
+  font-weight: 600;
+  color: #ccc;
+}
+
+.current-rating {
+  font-size: 0.95rem;
+  color: #bbb;
+}
+
+.custom-ngb-rating i {
+  font-size: 23px;
+  color: #f1b903;
+ 
+}
+
+.custom-ngb-rating i:hover {
+  transform: scale(1.2);
+  color: #ffd700;
+}
+
+.current-rating {
+  font-size: 20px;
+  font-weight: 500;
+  color: #fffafa;
+}

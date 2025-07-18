@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { environment } from "../../../environments/environment";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Router } from "@angular/router";
+import { Injectable, signal } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +9,9 @@ import { Router } from "@angular/router";
 export class AuthService {
   private apikey = environment.tmdbApiKey;
   private baseUrl = environment.tmdbBaseUrl;
+
+  isLoggedIn = signal(!!localStorage.getItem('session_id'));
+  username = signal(localStorage.getItem('username'));
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -31,7 +34,26 @@ export class AuthService {
 
   getAccountDetails(sessionId: string) {
     const url = `${this.baseUrl}/account`;
-    const params = new HttpParams().set('api_key', this.apikey).set('session_id', sessionId);
-    return this.http.get(url, {params});
+    const params = new HttpParams()
+      .set('api_key', this.apikey)
+      .set('session_id', sessionId);
+    return this.http.get(url, { params });
+  }
+
+  login(sessionId: string, username: string, userId: string) {
+    localStorage.setItem('session_id', sessionId);
+    localStorage.setItem('username', username);
+    localStorage.setItem('user_id', userId);
+    this.isLoggedIn.set(true);
+    this.username.set(username);
+  }
+
+  logout() {
+    localStorage.removeItem('session_id');
+    localStorage.removeItem('username');
+    localStorage.removeItem('user_id');
+    this.isLoggedIn.set(false);
+    this.username.set(null);
+    this.router.navigate(['/']);
   }
 }

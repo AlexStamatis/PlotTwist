@@ -415,14 +415,96 @@ export class TmdbService {
     });
   }
 
-  multiSearch(query:string, page:number = 1): Observable<any> {
+  multiSearch(query: string, page: number = 1): Observable<any> {
     return this.http.get(`${this.baseUrl}/search/multi`, {
-      params:{
-      api_key: this.apikey,
-      query,
-      page,
-      include_adult: false,
-    },
-    })
+      params: {
+        api_key: this.apikey,
+        query,
+        page,
+        include_adult: false,
+      },
+    });
   }
+  markAsFavorite(
+    accountId: string,
+    sessionId: string,
+    body: {
+      media_type: 'movie' | 'tv';
+      media_id: number;
+      favorite: boolean;
+    }
+  ) {
+    const params = new HttpParams()
+      .set('api_key', this.apikey)
+      .set('session_id', sessionId);
+
+    return this.http.post(
+      `${this.baseUrl}/account/${accountId}/favorite`,
+      body,
+      { params }
+    );
+  }
+
+  addToWatchlist(
+    accountId: string,
+    sessionId: string,
+    body: {
+      media_type: 'movie' | 'tv';
+      media_id: number;
+      watchlist: boolean;
+    }
+  ) {
+    const params = new HttpParams()
+      .set('api_key', this.apikey)
+      .set('session_id', sessionId);
+
+    return this.http.post(
+      `${this.baseUrl}/account/${accountId}/watchlist`,
+      body,
+      { params }
+    );
+  }
+
+  rateMovieorSeries(
+    mediaType: 'movie' | 'tv',
+    mediaId: number,
+    sessionId: string,
+    rating: number
+  ) {
+    const params = new HttpParams()
+      .set('api_key', this.apikey)
+      .set('session_id', sessionId);
+
+    return this.http.post(
+      `${this.baseUrl}/${mediaType}/${mediaId}/rating`,
+      { value: rating }, {params}
+    );
+  }
+
+  getFavorites(accountId: string, sessionId: string,mediaType: 'movie' | 'tv') {
+    const endpoint = mediaType === 'movie' ? 'movies' : 'tv';
+    const params = new HttpParams()
+    .set('api_key', this.apikey)
+    .set('session_id', sessionId);
+
+    return this.http.get(`${this.baseUrl}/account/${accountId}/favorite/${endpoint}`, {params});
+  }
+
+  getUserRatings(accountId: string, sessionId: string, mediaType: 'movie' | 'tv') {
+    const endpoint = mediaType === 'movie' ? 'movies' : 'tv';
+    const params = new HttpParams()
+    .set('api_key', this.apikey)
+    .set('session_id', sessionId);
+
+    return this.http.get(`${this.baseUrl}/account/${accountId}/rated/${endpoint}`, { params });
+  }
+
+  getUserWatchlist(accountId: string, sessionId: string, mediaType: 'movie' | 'tv') {
+    const endpoint = mediaType === 'movie' ? 'movies' : 'tv';
+  const params = new HttpParams()
+    .set('api_key', this.apikey)
+    .set('session_id', sessionId);
+
+  return this.http.get(`${this.baseUrl}/account/${accountId}/watchlist/${endpoint}`, { params });
+}
 }

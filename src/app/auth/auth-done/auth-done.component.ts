@@ -7,10 +7,10 @@ import { AuthService } from '../../shared/services/auth.service';
   standalone: true,
   imports: [],
   templateUrl: './auth-done.component.html',
-  styleUrl: './auth-done.component.css'
+  styleUrl: './auth-done.component.css',
 })
 export class AuthDoneComponent {
-constructor(
+  constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService
@@ -24,21 +24,19 @@ constructor(
       this.authService.createSession(requestToken).subscribe({
         next: (res: any) => {
           const sessionId = res.session_id;
-          localStorage.setItem('session_id', sessionId);
-          console.log('Session created:', sessionId);
-        
+
           this.authService.getAccountDetails(sessionId).subscribe({
-            next: (account:any) => {
-              localStorage.setItem('username', account.username);
+            next: (account: any) => {
+              this.authService.login(sessionId, account.username, account.id);
               localStorage.setItem('user_id', account.id);
               this.router.navigate(['/']);
-            }
-          })
+            },
+          });
         },
         error: (err) => {
           console.error('Failed to get account details:', err);
           this.router.navigate(['/']);
-        }
+        },
       });
     } else {
       console.warn('Token not approved or missing');

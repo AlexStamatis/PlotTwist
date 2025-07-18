@@ -4,11 +4,12 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TmdbService } from '../../services/tmdb.service';
 import { MovieDetails } from '../../models/movie.model';
 import { CastCardComponent } from '../cast-card/cast-card.component';
+import { NgbRating} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [CommonModule, RouterModule,CastCardComponent],
+  imports: [CommonModule, RouterModule, CastCardComponent, NgbRating],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.css',
 })
@@ -18,6 +19,98 @@ export class MovieDetailsComponent {
   details = signal<MovieDetails | null>(null);
   crew = signal<any[]>([]);
   cast = signal<any[]>([]);
+  isFavourite = signal<boolean>(false);
+  isWatchlisted = signal<boolean>(false);
+  userRating = signal<number | null>(null);
+  starRating = signal<number>(0);
+
+  ngOnInit() {
+  this.loadUserActions();
+}
+
+setInitialRating(userRating: number) {
+  this.starRating.set(userRating);
+}
+
+  loadUserActions() {
+    const accountId = localStorage.getItem('user_id')
+    const sessionId = localStorage.getItem('session_id');
+    const movieId = this.id();
+
+    if(!accountId || !sessionId || !movieId) return;
+
+    this.tmdbService.getFavorites(accountId, sessionId, this.mediaType()).subscribe((res:any) => {
+        const found = res.results.find((m:any) => m.id === movieId);
+        this.isFavourite.set(!!found);
+    });
+
+    this.tmdbService.getUserWatchlist(accountId, sessionId,this.mediaType()).subscribe((res:any) => {
+      const found = res.results.find((m:any) => m.id === movieId);
+      this.isWatchlisted.set(!!found);
+    });
+
+    this.tmdbService.getUserRatings(accountId, sessionId,this.mediaType()).subscribe((res:any) => {
+      const found = res.results.find((m:any) => m.id === movieId);
+      console.log('Found rating:', found);
+      if(found) {
+        this.starRating.set(found.rating);
+        this.userRating.set(found.rating);
+        this.setInitialRating(found.rating);
+      }
+    });
+  }
+
+  toggleFavorite() {
+    const accountId = localStorage.getItem('user_id')
+    const sessionId = localStorage.getItem('session_id');
+    const id = this.id();
+    const media = this.mediaType();
+
+    if(!accountId || !sessionId || !id) return;
+
+    const newStatus = !this.isFavourite();  //flip current state (for example from true to false)
+    this.tmdbService.markAsFavorite(accountId, sessionId,  {
+      media_type: media,
+      media_id: id,
+      favorite: newStatus,
+    }).subscribe(() => {
+      this.isFavourite.set(newStatus);
+    })
+  }
+
+  toggleWatchlist() {
+    const accountId = localStorage.getItem('user_id')
+    const sessionId = localStorage.getItem('session_id');
+    const id = this.id();
+    const media = this.mediaType();
+
+    console.log('Toggle Watchlist:', { accountId, sessionId, id, media });
+    if(!accountId || !sessionId || !id) return;
+
+    const newStatus = !this.isWatchlisted();
+    this.tmdbService.addToWatchlist(accountId, sessionId, {
+      media_type: media,
+      media_id: id,
+      watchlist: newStatus,
+    }).subscribe(() => {
+      this.isWatchlisted.set(newStatus);
+    })
+  }
+
+  movieRate(rating: number) {
+    const sessionId = localStorage.getItem('session_id');
+    const id = this.id();
+    const media = this.mediaType();
+
+    if(!sessionId || !id) return;
+
+      this.tmdbService.rateMovieorSeries(media, id, sessionId, rating).subscribe(() => {
+        this.userRating.set(rating);
+        this.starRating.set(rating);
+        
+      });
+    
+  }
 
   genres = computed(() => {
     const value = this.details();
