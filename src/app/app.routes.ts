@@ -87,7 +87,12 @@ export const routes: Routes = [
   {
     path: 'auth/done',
     loadComponent: () => import('./auth/auth-done/auth-done.component').then(m => m.AuthDoneComponent),
-  } 
+  }, 
+
+  {
+    path: 'u/:username/:type',
+    loadComponent: () => import('./pages/user-list/user-list.component').then(m => m.UserListComponent),
+  }
   
 ];
 

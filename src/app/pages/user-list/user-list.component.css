@@ -1,0 +1,17 @@
+.user-list-container {
+  min-height: calc(100vh - 100px);
+  background-color: white;
+  padding: 2rem;
+}
+
+.title {
+  max-width: 1300px;
+  margin: auto;
+}
+
+.no-results{
+  max-width: 1300px;
+  margin: auto; 
+  
+
+} 

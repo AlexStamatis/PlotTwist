@@ -5,11 +5,12 @@ import { TmdbService } from '../../services/tmdb.service';
 import { MovieDetails } from '../../models/movie.model';
 import { CastCardComponent } from '../cast-card/cast-card.component';
 import { NgbRating} from '@ng-bootstrap/ng-bootstrap';
+import { SpinnerComponent } from "../spinner/spinner.component";
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, CastCardComponent, NgbRating],
+  imports: [CommonModule, RouterModule, CastCardComponent, NgbRating, SpinnerComponent],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.css',
 })
@@ -23,6 +24,7 @@ export class MovieDetailsComponent {
   isWatchlisted = signal<boolean>(false);
   userRating = signal<number | null>(null);
   starRating = signal<number>(0);
+  loading = signal(true);
 
   ngOnInit() {
   this.loadUserActions();
@@ -165,6 +167,7 @@ setInitialRating(userRating: number) {
       const media = this.mediaType();
 
       if (id && media) {
+        this.loading.set(true);
         this.tmdbService.getMovieDetails(media, id).subscribe((res) => {
           this.details.set(res);
 
@@ -187,6 +190,7 @@ setInitialRating(userRating: number) {
             if (res.cast?.length) {
               this.cast.set(res.cast);
             }
+            this.loading.set(false);
           });
         });
       }

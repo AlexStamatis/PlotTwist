@@ -56,4 +56,12 @@ export class AuthService {
     this.username.set(null);
     this.router.navigate(['/']);
   }
+
+getSessionId():string | null {
+  return localStorage.getItem('session_id') || '';
+}
+
+getAccountId():string | null {
+  return localStorage.getItem('user_id');
+} 
 }

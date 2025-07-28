@@ -1,6 +1,6 @@
 import { Component, computed } from '@angular/core';
 import { DropdownComponent } from '../dropdown/dropdown.component';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 
@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, DropdownComponent],
+  imports: [CommonModule, DropdownComponent,RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })

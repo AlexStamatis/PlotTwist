@@ -500,11 +500,35 @@ export class TmdbService {
   }
 
   getUserWatchlist(accountId: string, sessionId: string, mediaType: 'movie' | 'tv') {
-    const endpoint = mediaType === 'movie' ? 'movies' : 'tv';
+  const endpoint = mediaType === 'movie' ? 'movies' : 'tv';
   const params = new HttpParams()
     .set('api_key', this.apikey)
     .set('session_id', sessionId);
 
   return this.http.get(`${this.baseUrl}/account/${accountId}/watchlist/${endpoint}`, { params });
+}
+
+rate(mediaType: 'movie' | 'tv', mediaId: number, rating:number, sessionId: string) {
+  return this.http.post(`${this.baseUrl}/${mediaType}/${mediaId}/rating?api_key=${this.apikey}&session_id=${sessionId}`, {value:rating})
+}
+
+toggleFavorite(mediaType: 'movie' | 'tv', accountId: string, mediaId: number, favorite: boolean, sessionId: string) {
+  return this.http.post(`${this.baseUrl}/account/${accountId}/favorite?api_key=${this.apikey}&session_id=${sessionId}`, {
+    media_type: mediaType,
+    media_id: mediaId,
+    favorite,
+  })
+}
+
+toggleWatchlist(mediaType: 'movie' | 'tv', accountId: string, mediaId: number, watchlist: boolean, sessionId: string) {
+  return this.http.post(`${this.baseUrl}/account/${accountId}/watchlist?api_key=${this.apikey}&session_id=${sessionId}`, {
+      media_type: mediaType,
+      media_id: mediaId,
+      watchlist,
+    })
+}
+
+removeRating(mediaType: 'movie'| 'tv', mediaId: number, sessionId: string) {
+  return this.http.delete(`${this.baseUrl}/${mediaType}/${mediaId}/rating?api_key=${this.apikey}&session_id=${sessionId}`);
 }
 }

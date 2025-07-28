@@ -1,0 +1,16 @@
+<div class="modal-overlay" (click)="cancel()"></div>
+<div class="modal-container">
+  <h3>Rate: {{ item.title || item.name }}</h3>
+  <div class="stars">
+    <i
+      *ngFor="let star of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+      class="fa-star fa"
+      [class.filled]="star <= selectedRating"
+      (click)="setRating(star)"
+    ></i>
+  </div>
+  <div class="modal-actions">
+    <button class="submit-btn" (click)="submitRating()">Submit</button>
+    <button class="cancel-btn" (click)="cancel()">Cancel</button>
+  </div>
+</div>

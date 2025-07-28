@@ -1,0 +1,29 @@
+<div class="user-list-container">
+  <div class="title">
+    <h2>{{ title() }}</h2>
+  </div>
+
+  <ng-container *ngIf="results().length > 0; else noResults">
+    <app-favorites-card
+      *ngFor="let result of results()"
+      [item]="result"
+      [type]="'favorites'"
+      (rated)="onRate($event)"
+      (favoriteChanged)="onToggleFavorite($event)"
+      (watchlistChanged)="onToggleWatchlist($event)"
+      (removed)="onRemove($event)"
+      (openRatingModal)="ratingModal.set($event)"
+    ></app-favorites-card>
+  </ng-container>
+  <ng-template #noResults>
+    <p class="no-results">No results found.</p>
+  </ng-template>
+  <ng-container *ngIf="ratingModal() as item">
+    <app-star-rating-modal
+    [item]="item"
+    (rate)="onRate({item, rating: $event})"
+    (close)="ratingModal.set(null)">
+      
+    </app-star-rating-modal>
+  </ng-container>
+</div>
