@@ -1,1 +1,28 @@
-<p>tv-shows-top-rated works!</p>
+<div class="series-container">
+  <app-filters
+    [filterTitle]="'Top Rated'"
+    (searchBtnClicked)="onSearchFromFilters($event)"
+    [resetOption]="resetFilter()"
+    [contentType]="'tv'"
+  ></app-filters>
+
+  @if (topRatedTvShows().length) {
+  <div class="series-grid-and-button" [class.fade-in]="!loading()">
+    <div class="series-grid">
+      @for (topRatedTvShow of topRatedTvShows();track topRatedTvShow.id) {
+      <app-movie-card
+        [title]="topRatedTvShow.original_name"
+        [posterPath]="topRatedTvShow.poster_path"
+        [releaseDate]="topRatedTvShow.first_air_date"
+        [voteAverage]="topRatedTvShow.vote_average"
+        [movieId]="topRatedTvShow.id"
+        [mediaType]="'tv'"
+      >
+      </app-movie-card>
+      }
+    </div>
+    <button class="load-more-btn" (click)="onLoadNextPages()">Load More</button>
+  </div>
+
+  }
+</div>

@@ -1,0 +1,47 @@
+<div class="filters-title">
+  <h2>{{ filterTitle }}</h2>
+</div>
+<div ngbAccordion>
+  <div ngbAccordionItem>
+    <h2 ngbAccordionHeader>
+      <button ngbAccordionButton>Sort Results By</button>
+    </h2>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <ng-template>
+          <button
+            *ngFor="let option of sortOptions"
+            class="btn btn-outline-secondary btn-sm me-1 mb-1"
+            [class.active]="sortSelected() === option.value"
+            [class.just-unselected]="option.value === UnselectedSort()"
+            (click)="onSortSelected(option.value)"
+          >
+            {{ option?.label }}
+          </button>
+          
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4 genre-container">
+  <h5 class="genre-title">Filter By Genre</h5>
+  <div class="d-flex flex-wrap genre-buttons">
+    <button
+      *ngFor="let genre of genres"
+      class="btn btn-outline-secondary btn-sm me-1 mb-1"
+      [class.active]="genreSelected().has(genre.id)"
+      (click)="onGenreSelected(genre.id)"
+    > {{genre.name}}</button>
+  </div>
+</div>
+
+<button
+  *ngIf="(sortSelected() || genreSelected().size > 0) && !searchTriggered"
+  class="btn btn-primary w-100 position-fixed bottom-0 start-0 rounded-0 py-3"
+  style="z-index: 1050;"
+  (click)="onSearch()"
+>
+  Search
+</button>

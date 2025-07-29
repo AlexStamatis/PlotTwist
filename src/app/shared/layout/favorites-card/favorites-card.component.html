@@ -1,0 +1,43 @@
+<div class="card-container">
+  <div class="poster">
+    <img class="poster-img" [src]="poster" [alt]="title" />
+  </div>
+  <div class="details">
+    <div class="rating-badge">
+      {{
+        item.vote_average > 0 ? (item.vote_average | number : "1.1-1") : "NR"
+      }}
+    </div>
+    <h5 class="title">{{ title }}</h5>
+    <p class="release-date">
+      <i class="fa-solid fa-calendar"></i
+      >{{ item.release_date || item.first_air_date | date : "longDate" }} (GR)
+    </p>
+    <p class="overview">{{ overview }}</p>
+
+    <div class="actions-container">
+      <button class="rating-button" (click)="openRatingModalHandler()">
+        <div class="action-badge">
+          {{ item.rated?.value ?? "N/A" }}
+        </div>
+        Your Rating
+      </button>
+      <button class="favorite-button" (click)="toggleFavorite()">
+        <div class="action-badge"><i class="fa" [ngClass]="item.favorite ? 'fa-heart' : 'fa-heart-o'"></i></div>
+        {{ item.favorite ? 'Remove from favorites' : 'Add to favorites' }}
+      </button>
+      <button class="add-to-watchlist-btn" (click)="toggleWatchlist()">
+        <div class="action-badge">
+          <i class="fa" [ngClass]="item.watchlist ? 'fa-minus' : 'fa-plus'"></i>
+        </div>
+       {{ item.watchlist ? 'Remove from watchlist' : 'Add to watchlist' }}
+      </button>
+      <button class="remove-button" (click)="remove()">
+        <div class="action-badge">
+          <i class="fa-solid fa-trash"></i>
+        </div>
+       Remove
+      </button>
+    </div>
+  </div>
+</div>

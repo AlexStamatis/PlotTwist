@@ -1,1 +1,31 @@
-<p>movies-now-playing works!</p>
+<div class="movies-container">
+  <app-filters
+    [filterTitle]="'Now Playing'"
+    (searchBtnClicked)="onSearchFromFilters($event)"
+    [resetOption] = "resetFilter()"
+    [contentType]="'movie'"
+  ></app-filters>
+  
+  @if (nowPlayingMovies().length) {
+  <div class="movies-grid-and-button" [class.fade-in]="!loading()">
+    <div class="movies-grid">
+      @for (nowPlayingMovie of nowPlayingMovies();track nowPlayingMovie.id){
+      <app-movie-card
+        [title]="nowPlayingMovie.title"
+        [posterPath]="nowPlayingMovie.poster_path"
+        [releaseDate]="nowPlayingMovie.release_date"
+        [voteAverage]="nowPlayingMovie.vote_average"
+        [movieId]="nowPlayingMovie.id"
+        [mediaType]="'movie'"
+      >
+      </app-movie-card>
+      }
+    </div>
+    <button class="load-more-btn" (click)="onLoadNextPages()">Load More</button>
+  </div>
+
+  }
+</div>
+@if (loading()) {
+<app-spinner />
+}

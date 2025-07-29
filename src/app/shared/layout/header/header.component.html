@@ -1,19 +1,22 @@
-<div class="d-flex justify-content-between ml-5 mr-5">
+<div class="d-flex justify-content-between header-container">
   <div class="d-flex">
-    <h1 class="main-header" (click)="sendHome()">Plot Twist</h1>
+    <div class="logo-container" (click)="sendHome()" style="cursor: pointer">
+      <p>Plot Twist</p>
+    </div>
+
     <nav class="navbar header-navbar">
       <a class="navbar-options"
         ><app-dropdown
           [category]="'Movies'"
           [options]="moviesOptions"
-          (selectionChanged)="onDropdownSelect('movies',$event)"
+          (selectionChanged)="onDropdownSelect('movies', $event)"
         ></app-dropdown
       ></a>
       <a class="navbar-options"
         ><app-dropdown
           [category]="'TV Shows'"
           [options]="tvshowsOptions"
-          (selectionChanged)="onDropdownSelect('tv',$event)"
+          (selectionChanged)="onDropdownSelect('tv', $event)"
         ></app-dropdown
       ></a>
       <a class="navbar-options"
@@ -25,9 +28,42 @@
       ></a>
     </nav>
   </div>
-  <div class="d-flex">
-    <button type="button" class="login-btn align-self-center">
-      <i class="fa-solid fa-user"></i>Login or Register
-    </button>
+  <div class="d-flex align-items-center">
+    <ng-container *ngIf="isLoggedIn(); else loggedOut">
+      <span class="text-white">Welcome, {{ username() }}</span>
+      <div class="dropdown">
+        <button
+          class="btn btn-outline-light rounded-circle text-uppercase fw-bold"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          style="width: 40px; height: 40px"
+        > {{username()?.charAt(0)}}</button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" [routerLink]="['/u', username(), 'favorites']">Favorites</a>
+          </li>
+           <li>
+            <a class="dropdown-item" [routerLink]="['/u', username(), 'watchlist']">Watchlist</a>
+          </li>
+           <li>
+            <a class="dropdown-item" [routerLink]="['/u', username(), 'ratings']">Ratings</a>
+          </li>
+
+        </ul>
+      </div>
+      <button class="btn btn-sm btn-danger ms-2" (click)="logout()">
+        Logout
+      </button>
+    </ng-container>
+    <ng-template #loggedOut>
+      <button
+        type="button"
+        class="login-btn align-self-center"
+        (click)="startLogin()"
+      >
+        <i class="fa-solid fa-user"></i> Login or Register
+      </button>
+    </ng-template>
   </div>
 </div>

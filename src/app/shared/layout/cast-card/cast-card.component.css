@@ -1,0 +1,32 @@
+.card-wrapper {
+    display:flex;
+    flex-direction: column;
+    width:150px;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+
+}
+
+.profile {
+    width:100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.person-details {
+    margin-top: 10px;
+}
+
+.person-details h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.character,
+.episodes {
+    font-size: 15px;
+    color: #cacaca;
+}

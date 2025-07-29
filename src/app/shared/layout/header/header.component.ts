@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { DropdownComponent } from '../dropdown/dropdown.component';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, DropdownComponent],
+  imports: [CommonModule, DropdownComponent,RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -15,16 +17,19 @@ export class HeaderComponent {
   tvshowsOptions = ['Popular', 'Airing Today', 'On TV', 'Top Rated'];
   peopleOptions = ['Popular People'];
 
-  routeMap:Record<string, Record<string, string>> = {
+  isLoggedIn = computed(() => this.authService.isLoggedIn());
+  username = computed(() => this.authService.username());
+
+  routeMap: Record<string, Record<string, string>> = {
     movies: {
-      'Popular': '/movie',
+      Popular: '/movie',
       'Now Playing': '/movie/now-playing',
-      'Upcoming': '/movie/upcoming',
+      Upcoming: '/movie/upcoming',
       'Top Rated': '/movie/top-rated',
     },
 
     tv: {
-      'Popular': '/tv',
+      Popular: '/tv',
       'Airing Today': '/tv/airing-today',
       'On TV': '/tv/on-tv',
       'Top Rated': '/tv/top-rated',
@@ -34,15 +39,31 @@ export class HeaderComponent {
     },
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   onDropdownSelect(category: string, option: string) {
- const route = this.routeMap[category]?.[option];
- if (route) {
-    this.router.navigate([route]);
+    const route = this.routeMap[category]?.[option];
+    if (route) {
+      this.router.navigate([route]);
+    }
   }
-}
- sendHome() {
-  this.router.navigate(['/']);
- }
+  sendHome() {
+    this.router.navigate(['/']);
+  }
+
+  startLogin() {
+    this.authService.requestToken().subscribe({
+      next: (res: any) => {
+        const requestToken = res.request_token;
+        this.authService.redirectToTmdbAuth(requestToken);
+      },
+      error: (err) => {
+        console.error('Error requesting token', err);
+      },
+    });
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 }

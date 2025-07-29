@@ -1,0 +1,88 @@
+<div class="details-container" *ngIf="details() as item">
+  <div class="poster-wrapper">
+    <img [src]="'https://image.tmdb.org/t/p/w500' + item.poster_path" />
+  </div>
+  <div class="info-wrapper">
+    <h2 class="title">
+      {{ item.title || item.name }}
+      <span class="year"
+        >({{ (item.release_date || item.first_air_date)?.slice(0, 4) }})</span
+      >
+    </h2>
+
+    <div class="more-info">
+      <span class="release-date">
+        {{ item.release_date || item.first_air_date | date : "MM/dd/yyyy" }}
+        (GR)
+      </span>
+
+      <span class="genres">
+        <span class="bullet">•</span>
+        {{ genres() }}
+      </span>
+      <span class="bullet">•</span>
+      <span class="runtime" *ngIf="item.runtime"> {{ item.runtime }} min </span>
+    </div>
+    <div class="rating-badge">
+      {{
+        item.vote_average > 0 ? (item.vote_average | number : "1.1-1") : "NR"
+      }}
+    </div>
+    <p class="overview">{{ item.overview }}</p>
+    <div class="actions-container">
+      <button class="action-button" (click)="toggleFavorite()">
+        <span class="icon">{{ isFavourite() ? "★" : "☆" }}</span>
+        {{ isFavourite() ? "In Favorites" : "Add to Favorites" }}
+      </button>
+      <button class="action-button" (click)="toggleWatchlist()">
+        <span class="icon">{{ isWatchlisted() ? "✔" : "+" }}</span>
+        {{ isWatchlisted() ? "In Watchlist" : "Add to Watchlist" }}
+      </button>
+    </div>
+    <div class="rating-container custom-ngb-rating">
+      <ngb-rating
+        [(rate)]="starRating"
+        [max]="10"
+        [readonly]="false"
+        (rateChange)="movieRate($event)"
+      >
+        <ng-template let-fill="fill">
+          <i
+            class="bi"
+            [ngClass]="{
+              'bi-star-fill': fill === 100,
+              'bi-star-half': fill > 0 && fill < 100,
+              'bi-star': fill === 0
+            }"
+          ></i>
+        </ng-template>
+      </ngb-rating>
+      <span class="current-rating">({{ userRating() || "Not Rated" }})</span>
+    </div>
+    <div class="crew-info" *ngIf="groupCrewByPerson().length">
+      <div
+        class="crew-type"
+        *ngFor="let person of groupCrewByPerson(); let last = last"
+      >
+        <a [routerLink]="['/person', person.id]" class="person-link">
+          {{ person.name }}
+        </a>
+        <span class="job"> {{ person.roles.join(", ") }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="cast-container" *ngIf="cast().length">
+  <h3 class="section-title">Top Billed Cast</h3>
+  <div class="cast-grid">
+    @for (actor of cast().slice(0, 20); track actor.id) {
+    <app-cast-card
+      [castMember]="actor"
+      [showEpisodeCount]="mediaType() === 'tv'"
+    ></app-cast-card>
+    }
+  </div>
+</div>
+@if (loading()) {
+<app-spinner />
+}

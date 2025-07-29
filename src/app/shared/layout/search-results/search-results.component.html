@@ -1,0 +1,67 @@
+<div class="search-results-container">
+  <ng-container *ngFor="let item of searchResults()">
+    <div
+      *ngIf="item.media_type === 'movie' || item.media_type === 'tv'"
+      class="movie-card"
+      (click)="navigateTo(item)"
+      role="button"
+    >
+      <div class="img-container" *ngIf="item.poster_path">
+        <img
+          class="poster"
+          [src]="'https://image.tmdb.org/t/p/w185' + item.poster_path"
+          alt="{{ item.title || item.name }}"
+        />
+      </div>
+
+      <div class="movie-info">
+        <h3>{{ item.name || item.title }}</h3>
+        <p class="release-date">
+          <i class="fa-solid fa-calendar"></i>
+          <ng-container
+            *ngIf="item.release_date || item.first_air_date; else noDate"
+          >
+            {{ item.release_date || item.first_air_date | date : "longDate" }}
+          </ng-container>
+          <ng-template #noDate> N/A </ng-template>
+        </p>
+        <p class="overview">
+          {{ item.overview || "No description available" | slice : 0 : 100 }}
+        </p>
+      </div>
+    </div>
+    <div
+      *ngIf="item.media_type === 'person'"
+      class="person-card"
+      (click)="navigateTo(item)"
+      role="button"
+    >
+      <div class="img-container" *ngIf="item.profile_path">
+        <img
+          class="profile-picture"
+          [src]="'https://image.tmdb.org/t/p/w185' + item.profile_path"
+          alt="{{ item.name }}"
+        />
+      </div>
+
+      <div class="person-info">
+        <h3>{{ item.name }}</h3>
+        <p class="known-for">Known For:</p>
+        <ul>
+          <li *ngFor="let known of item.known_for?.slice(0, 3)">
+            {{ known.title || known.name }}
+            ({{ known.media_type }})
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+  <div class="load-more-btn-container" *ngIf="currentPage() < totalPages()">
+    <button (click)="loadMore()" [disabled]="isLoading()">
+      {{ isLoading() ? "Loading..." : "Load More" }}
+    </button>
+  </div>
+</div>
+@if (isLoading()) {
+<app-spinner />
+}

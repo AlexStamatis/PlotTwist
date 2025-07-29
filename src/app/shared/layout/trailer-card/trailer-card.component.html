@@ -1,0 +1,9 @@
+<div class="trailer-card" (click)="openTrailerModal()">
+  <div class="thumbnail-wrapper">
+    <img [src]="thumbnailUrl" alt="{{ trailer.title }}" loading="lazy" />
+    <i class="fa-solid fa-play play-icon"></i>
+  </div>
+  <div class="title">
+    <p [title]="trailer.title">{{ trailer.title }} </p>
+  </div>
+</div>

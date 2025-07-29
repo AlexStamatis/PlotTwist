@@ -1,1 +1,31 @@
-<p>movies-top-rated works!</p>
+<div class="movies-container">
+  <app-filters
+    [filterTitle]="'Top Rated'"
+    (searchBtnClicked)="onSearchFromFilters($event)"
+    [resetOption]="resetFilter()"
+    [contentType]="'movie'"
+  ></app-filters>
+
+  @if (topRatedMovies().length) {
+  <div class="movies-grid-and-button" [class.fade-in]="!loading()">
+    <div class="movies-grid">
+      @for (topRatedMovie of topRatedMovies();track topRatedMovie.id) {
+      <app-movie-card
+        [title]="topRatedMovie.title"
+        [posterPath]="topRatedMovie.poster_path"
+        [releaseDate]="topRatedMovie.release_date"
+        [voteAverage]="topRatedMovie.vote_average"
+        [movieId]="topRatedMovie.id"
+        [mediaType]="'movie'"
+      >
+      </app-movie-card>
+      }
+    </div>
+    <button class="load-more-btn" (click)="onLoadNextPages()">Load More</button>
+  </div>
+
+  }
+</div>
+@if (loading()) {
+<app-spinner />
+}

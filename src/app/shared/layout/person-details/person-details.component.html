@@ -1,0 +1,106 @@
+<div class="person-details-container">
+  <div class="left-side">
+    <img
+      class="person-image"
+      [src]="'https://image.tmdb.org/t/p/w185' + person()?.profile_path"
+      [alt]="person()?.name"
+    />
+    <div class="personal-info">
+      <h3>Personal Info</h3>
+      <p>
+        <strong>Known for: </strong
+        >{{ person()?.known_for_department || "N/A" }}
+      </p>
+      <p><strong>Gender: </strong>{{ getGender(person()?.gender) }}</p>
+      <p>
+        <strong>Birthday: </strong
+        >{{ formatDate(person()?.birthday, person()?.deathday || undefined) }}
+      </p>
+      <p *ngIf="person()?.deathday">
+        <strong>Died: </strong
+        >{{ formatDate(person()?.deathday, person()?.deathday) }}
+      </p>
+      <p>
+        <strong>Place of Birth: </strong>{{ person()?.place_of_birth || "N/A" }}
+      </p>
+      <p>
+        <strong>Also Known As: </strong>{{ person()?.also_known_as || "N/A" }}
+      </p>
+    </div>
+  </div>
+  <div class="right-side">
+    <h1>{{ person()?.name }}</h1>
+    <h3>Biography</h3>
+    <p class="biography" [class.clamped]="!showFullBio()">
+      {{ person()?.biography || "No biography available." }}
+    </p>
+    <button
+      *ngIf="isLongBiography()"
+      (click)="toggleBiography()"
+      class="toggle-bio-btn"
+    >
+      {{ showFullBio() ? "Show Less" : "Read More" }}
+    </button>
+    <h3>Known For</h3>
+    <div class="known-for-movies">
+      <div class="known-for-card" *ngFor="let item of knownFor()">
+        <img
+          [src]="'https://image.tmdb.org/t/p/w185' + item.poster_path"
+          [alt]="item.title || item.name"
+        />
+        <p>{{ item.title || item.name }}</p>
+      </div>
+    </div>
+    <h3>Credits</h3>
+    <div class="credits-container">
+      <div class="credits-list">
+        <div class="credit-item" *ngFor="let item of filteredCredits()">
+          <span class="year">
+            {{
+              item.release_date
+                ? item.release_date.slice(0, 4)
+                : item.first_air_date
+                ? item.first_air_date.slice(0, 4)
+                : "—"
+            }}
+          </span>
+          <span class="title">
+            {{ item.title || item.name }}
+          </span>
+          <span class="role" *ngIf="item.character || item.job">
+            as {{ item.character || item.job }}
+          </span>
+        </div>
+      </div>
+      <div class="filters">
+      <label>
+        <select
+          (change)="
+            selectedMediaType.set($any($event.target).value); filterCredits()
+          "
+        >
+          <option value="all">All</option>
+          <option value="movie">Movies</option>
+          <option value="tv">Tv Shows</option>
+        </select>
+      </label>
+      <label>
+        <select
+          (change)="
+            selectedDepartment.set($any($event.target).value); filterCredits()
+          "
+        >
+          <option value="">All Departments</option>
+          <option
+            *ngFor="let department of availableDepartments()"
+            [value]="department"
+          >
+            {{ department }}
+          </option>
+        </select>
+      </label>
+    </div>
+    </div>
+    
+  </div>
+</div>

@@ -1,5 +1,5 @@
 
-<div class="movie-card position-relative overflow-hidden">
+<a class="movie-card position-relative overflow-hidden" [routerLink]="['/', mediaType, movieId]" >
   <div class="image-wrapper position-relative">
     <img [src]="'https://image.tmdb.org/t/p/w500/' + posterPath" alt="{{ title }}" />
     <div class="rating-badge">
@@ -14,4 +14,4 @@
       {{ releaseDate | date : 'longDate' }}
     </div>
   </div>
-</div>
+</a>

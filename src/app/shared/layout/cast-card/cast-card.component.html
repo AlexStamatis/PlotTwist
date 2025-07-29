@@ -1,0 +1,19 @@
+<div class="card-wrapper">
+  <img
+    class="profile"
+    [src]="'https://image.tmdb.org/t/p/w185' + castMember.profile_path"
+    (click)="goToCastDetails(castMember.id)"
+    [alt]="castMember.name"
+  />
+  <div class="person-details">
+    <h3>{{ castMember.name }}</h3>
+    <p class="character">{{ castMember.character }}</p>
+    <p
+      class="episodes"
+      *ngIf="showEpisodeCount && castMember.total_episode_count"
+    >
+      {{ castMember.total_episode_count }} episode
+      {{ castMember.total_episode_count > 1 ? "s" : "" }}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="card-wrapper">
+  <img
+    class="profile"
+    [src]="'https://image.tmdb.org/t/p/w185' + person.profile_path"
+    (click)="goToPersonDetails(person.id)"
+    alt="{{ person.name }}"
+  />
+  <div class="person-details">
+    <h3>{{ person.name }}</h3>
+    @for (work of mostKnownFor;track work.title || work.name) {
+    <div class="work-name">
+      <li>{{ work.title || work.name }}</li>
+    </div>
+    }
+  </div>
+</div>

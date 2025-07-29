@@ -1,0 +1,28 @@
+:host {
+  .video-container {
+    height: 600px;
+  }
+
+  .modal-title {
+    opacity: 0.75;
+  }
+
+  .modal-content {
+    border: none;
+  }
+
+  .modal-header {
+    color: white;
+    background-color: black;
+    border-bottom: none;
+  }
+
+  .modal-body {
+    padding: 5px;
+    background-color: black;
+  }
+
+  .btn-close:focus {
+    box-shadow: none;
+  }
+}
