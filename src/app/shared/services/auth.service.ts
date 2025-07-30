@@ -22,7 +22,13 @@ export class AuthService {
   }
 
   redirectToTmdbAuth(requestToken: string) {
-    const redirectUrl = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=http://localhost:4200/auth/done`;
+    const origin = window.location.origin;
+
+    const basePath = environment.production ? '/PlotTwist' : '';
+
+    const callbackUrl = `${origin}${basePath}/#/auth/done`;
+
+    const redirectUrl = `https://www.themoviedb.org/authenticate/${requestToken}?redirect_to=${encodeURIComponent(callbackUrl)}`;
     window.location.href = redirectUrl;
   }
 
