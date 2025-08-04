@@ -23,14 +23,14 @@
     padding: 10px 25px;
     font-size: 20px;
     border-radius: 20px;
-    background-color: rgb(94, 110, 190);
+    background-color: var(--logo-color);
     font-weight: bold;
     cursor: pointer;
     width: 300px;
   }
 
   .load-more-btn:hover {
-    background-color: rgb(112, 125, 191);
+    background-color: var(--btn-hover);
   }
   .btn-container {
     display: flex;

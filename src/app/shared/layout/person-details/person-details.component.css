@@ -92,7 +92,7 @@
 }
 
 .toggle-bio-btn {
-  background-color: #007bff;
+  background-color: var(--logo-color);
   color: white;
   border: none;
   padding: 8px 14px;
@@ -102,7 +102,7 @@
 }
 
 .toggle-bio-btn:hover {
-  background-color: #045ebe;
+  background-color: var(--btn-hover);
 }
 
 .credits-container {
@@ -159,3 +159,8 @@
   color: black; 
   background-color: white;
 }
+
+
+
+
+

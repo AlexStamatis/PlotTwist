@@ -39,7 +39,7 @@
 
 <button
   *ngIf="(sortSelected() || genreSelected().size > 0) && !searchTriggered"
-  class="btn btn-primary w-100 position-fixed bottom-0 start-0 rounded-0 py-3"
+  class="w-100 position-fixed bottom-0 start-0 rounded-0 py-3 search-button"
   style="z-index: 1050;"
   (click)="onSearch()"
 >

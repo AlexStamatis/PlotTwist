@@ -92,7 +92,7 @@
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
-  background-color: rgb(94, 110, 190);
+  background-color: var(--logo-color);
   font-weight: bold;
   width: 300px;
   align-self: center;

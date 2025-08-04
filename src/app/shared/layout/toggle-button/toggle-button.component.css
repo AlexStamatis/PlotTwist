@@ -24,7 +24,7 @@
 
 
 .active-button {
-     background-color: #007bff;
+     background-color: var(--logo-color);
     z-index:2;
 }
 
