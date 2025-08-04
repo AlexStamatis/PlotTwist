@@ -13,9 +13,7 @@
         (input)="searchQuery.set($any($event.target).value)"
         (keyup.enter)="performSearch()"
       />
-      <button class="btn btn-primary search-button" (click)="performSearch()">
-        Search
-      </button>
+      <button class="search-button" (click)="performSearch()">Search</button>
       <button
         *ngIf="searchTriggered()"
         class="btn btn-outline-secondary clear-button"
@@ -25,9 +23,7 @@
       </button>
     </div>
   </div>
-  <app-search-results
-    *ngIf="hasQuery"
-  ></app-search-results>
+  <app-search-results *ngIf="hasQuery"></app-search-results>
   <div *ngIf="!searchTriggered()">
     <div class="trending">
       <p>Trending</p>
@@ -39,7 +35,12 @@
       </div>
     </div>
     <div class="movies-scrollbar-container">
-      <div class="movies-scrollbar">
+      <div
+        class="movies-scrollbar"
+        [class.masked]="showMask"
+        #scrollContainer
+        (scroll)="onScroll(scrollContainer)"
+      >
         @for (item of trendingItems();track item.id) {
         <app-movie-card
           [title]="item.title || item.name"
@@ -84,7 +85,12 @@
       </div>
     </div>
     <div class="recommended-scrollbar-container">
-      <div class="recommended-scrollbar">
+      <div
+        class="recommended-scrollbar"
+        [class.masked]="showMask"
+        #recommendedContainer
+        (scroll)="onScroll(recommendedContainer)"
+      >
         @for(item of recommendedItems();track item.id) {
         <app-movie-card
           [title]="item.title || item.name"

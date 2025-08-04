@@ -73,34 +73,34 @@
         </div>
       </div>
       <div class="filters">
-      <label>
-        <select
-          (change)="
-            selectedMediaType.set($any($event.target).value); filterCredits()
-          "
-        >
-          <option value="all">All</option>
-          <option value="movie">Movies</option>
-          <option value="tv">Tv Shows</option>
-        </select>
-      </label>
-      <label>
-        <select
-          (change)="
-            selectedDepartment.set($any($event.target).value); filterCredits()
-          "
-        >
-          <option value="">All Departments</option>
-          <option
-            *ngFor="let department of availableDepartments()"
-            [value]="department"
+        <label>
+          <select
+          
+            (change)="
+              selectedMediaType.set($any($event.target).value); filterCredits()
+            "
           >
-            {{ department }}
-          </option>
-        </select>
-      </label>
+            <option value="all">All</option>
+            <option value="movie">Movies</option>
+            <option value="tv">Tv Shows</option>
+          </select>
+        </label>
+        <label>
+          <select
+            (change)="
+              selectedDepartment.set($any($event.target).value); filterCredits()
+            "
+          >
+            <option value="">All Departments</option>
+            <option
+              *ngFor="let department of availableDepartments()"
+              [value]="department"
+            >
+              {{ department }}
+            </option>
+          </select>
+        </label>
+      </div>
     </div>
-    </div>
-    
   </div>
 </div>

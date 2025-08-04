@@ -37,12 +37,14 @@
 
   .search-button {
     border-radius: 50px;
-    padding: 8px 20px;
+    padding: 13px 20px;
     transition: all 0.3s ease;
+    background-color: var(--logo-color);
+    border: none;
   }
 
   .search-button:hover {
-    background-color: #0b5ed7;
+    background-color:  var(--btn-hover);
   }
 
   .trending {
@@ -63,21 +65,29 @@
   .movies-scrollbar {
     display: flex;
     gap: 20px;
-
-    overflow: auto;
-    white-space: nowrap;
-    mask-image: linear-gradient(to right, black 80%, transparent);
+    overflow-x: auto;
     overflow-y: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    transition: mask-image 0.3s ease;
+    padding-bottom: 16px;
+    scrollbar-color: rgba(255, 255, 255, 0.34) transparent;
+   
   }
+
+  .movies-scrollbar.masked {
+  mask-image: linear-gradient(to right, black 80%, transparent);
+  -webkit-mask-image: linear-gradient(to right, black 80%, transparent); 
+}
 
   .trailers-scrollbar {
     display: flex;
     overflow-x: auto;
-    min-height: 400px;
+    overflow-y: hidden;
     gap: 15px;
-    padding: 10px;
     scroll-behavior: smooth;
     transition: opacity 0.2s ease-in-out;
+    scrollbar-color: rgba(255, 255, 255, 0.34) transparent;
   }
 
   .trailers {
@@ -99,13 +109,20 @@
   .recommended-scrollbar {
     display: flex;
     gap: 20px;
-
-    overflow: auto;
-    white-space: nowrap;
-    mask-image: linear-gradient(to right, black 80%, transparent);
+    padding-bottom: 16px;
+    overflow-x: auto;
     overflow-y: hidden;
-  }
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    transition: mask-image 0.3s ease;
+    scrollbar-color: rgba(255, 255, 255, 0.34) transparent;
 
+   
+  }
+ .recommended-scrollbar.masked {
+  mask-image: linear-gradient(to right, black 80%, transparent);
+  -webkit-mask-image: linear-gradient(to right, black 80%, transparent); 
+}
   .clear-button {
     height: 40px;
     padding: 8px 15px;

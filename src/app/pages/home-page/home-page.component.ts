@@ -40,6 +40,7 @@ export class HomePageComponent {
   searchQuery = signal('');
   searchTriggered = signal(false);
   queryParams = signal<Params>({});
+  showMask = true;
 
   movieId = 27205;
   tvId = 1396;
@@ -244,4 +245,10 @@ export class HomePageComponent {
     { btnName: 'Movies', isActive: true },
     { btnName: 'Tv-shows', isActive: false },
   ];
+
+  onScroll(container: HTMLElement) {
+    const nearLast = container.scrollLeft + container.clientWidth >= container.scrollWidth - 10;
+
+    this.showMask = !nearLast;
+  }
 }
