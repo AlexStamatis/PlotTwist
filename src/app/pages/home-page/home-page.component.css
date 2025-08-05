@@ -41,10 +41,11 @@
     transition: all 0.3s ease;
     background-color: var(--logo-color);
     border: none;
+    font-weight: 500;
   }
 
   .search-button:hover {
-    background-color:  var(--btn-hover);
+    background-color: var(--btn-hover);
   }
 
   .trending {
@@ -72,13 +73,16 @@
     transition: mask-image 0.3s ease;
     padding-bottom: 16px;
     scrollbar-color: rgba(255, 255, 255, 0.34) transparent;
-   
   }
 
   .movies-scrollbar.masked {
-  mask-image: linear-gradient(to right, black 80%, transparent);
-  -webkit-mask-image: linear-gradient(to right, black 80%, transparent); 
-}
+    mask-image: linear-gradient(to right, black 80%, transparent);
+    -webkit-mask-image: linear-gradient(to right, black 80%, transparent);
+  }
+
+  .movies-scrollbar::-webkit-scrollbar-button {
+    display:none;
+  }
 
   .trailers-scrollbar {
     display: flex;
@@ -116,23 +120,23 @@
     scroll-behavior: smooth;
     transition: mask-image 0.3s ease;
     scrollbar-color: rgba(255, 255, 255, 0.34) transparent;
-
-   
   }
- .recommended-scrollbar.masked {
-  mask-image: linear-gradient(to right, black 80%, transparent);
-  -webkit-mask-image: linear-gradient(to right, black 80%, transparent); 
-}
+  .recommended-scrollbar.masked {
+    mask-image: linear-gradient(to right, black 80%, transparent);
+    -webkit-mask-image: linear-gradient(to right, black 80%, transparent);
+  }
   .clear-button {
     height: 40px;
     padding: 8px 15px;
   }
 
   app-search-results {
-  margin-top: 30px;
-  display: block;
-  background-color: #111;
-  padding: 20px;
-  border-radius: 12px;
-}
+    margin-top: 30px;
+    display: block;
+    background-color: #111;
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+
 }
