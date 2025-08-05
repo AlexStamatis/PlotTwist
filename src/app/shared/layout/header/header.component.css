@@ -35,14 +35,14 @@
     outline: none;
     padding: 4px 10px;
     background-color: var(--logo-color);
-    color: white;
-    font-weight: bold;
+    color: black;
+    font-weight: 500;
     border-radius: 30px;
     height: 40px;
     cursor: pointer;
   }
   .login-btn:hover {
-    background-color: rgb(254, 48, 48);
+    background-color: var(--btn-hover);
   }
   .fa-user {
     margin-right: 5px;
