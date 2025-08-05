@@ -69,6 +69,13 @@
     background-color: var(--logo-color);
   }
 
+  button[ngbAccordionButton] {
+  background-color: white !important;
+  color: black;
+  border: 2px solid #dee2e6;
+  box-shadow: none;
+}
+
   /* .combined-search-btn {
    display:block;
     position:fixed;

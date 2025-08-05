@@ -70,13 +70,13 @@ export class UserListComponent {
     const { item, rating } = event;
     const sessionId = this.authService.getSessionId();
 
-    if (!sessionId) return;
+    if (!sessionId || !item?.id) return;
 
     const mediaType = item.media_type || (item.title ? 'movie' : 'tv');
     item.rated = { value: rating };
 
     this.tmdbService
-      .rate(mediaType, item.id, rating, sessionId)
+      .rateMovieorSeries(mediaType, item.id, sessionId, rating)
       .subscribe(() => {});
   }
 

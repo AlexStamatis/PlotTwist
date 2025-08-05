@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -475,9 +475,13 @@ export class TmdbService {
       .set('api_key', this.apikey)
       .set('session_id', sessionId);
 
+    const headers = new HttpHeaders({
+    'Content-Type': 'application/json;charset=utf-8',
+  });
+
     return this.http.post(
       `${this.baseUrl}/${mediaType}/${mediaId}/rating`,
-      { value: rating }, {params}
+      { value: rating }, {params, headers}
     );
   }
 
@@ -508,24 +512,32 @@ export class TmdbService {
   return this.http.get(`${this.baseUrl}/account/${accountId}/watchlist/${endpoint}`, { params });
 }
 
-rate(mediaType: 'movie' | 'tv', mediaId: number, rating:number, sessionId: string) {
-  return this.http.post(`${this.baseUrl}/${mediaType}/${mediaId}/rating?api_key=${this.apikey}&session_id=${sessionId}`, {value:rating})
-}
+// rate(mediaType: 'movie' | 'tv', mediaId: number, rating:number, sessionId: string) {
+//   return this.http.post(`${this.baseUrl}/${mediaType}/${mediaId}/rating?api_key=${this.apikey}&session_id=${sessionId}`, {value:rating})
+// }
 
 toggleFavorite(mediaType: 'movie' | 'tv', accountId: string, mediaId: number, favorite: boolean, sessionId: string) {
+const headers = new HttpHeaders({
+    'Content-Type': 'application/json;charset=utf-8'
+  });
+
   return this.http.post(`${this.baseUrl}/account/${accountId}/favorite?api_key=${this.apikey}&session_id=${sessionId}`, {
     media_type: mediaType,
     media_id: mediaId,
     favorite,
-  })
+  }, { headers })
 }
 
 toggleWatchlist(mediaType: 'movie' | 'tv', accountId: string, mediaId: number, watchlist: boolean, sessionId: string) {
+const headers = new HttpHeaders({
+    'Content-Type': 'application/json;charset=utf-8'
+  });
+
   return this.http.post(`${this.baseUrl}/account/${accountId}/watchlist?api_key=${this.apikey}&session_id=${sessionId}`, {
       media_type: mediaType,
       media_id: mediaId,
       watchlist,
-    })
+    }, { headers })
 }
 
 removeRating(mediaType: 'movie'| 'tv', mediaId: number, sessionId: string) {

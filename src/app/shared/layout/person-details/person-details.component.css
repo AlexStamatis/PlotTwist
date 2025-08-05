@@ -93,7 +93,8 @@
 
 .toggle-bio-btn {
   background-color: var(--logo-color);
-  color: white;
+  color: black;
+  font-weight: 500;
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
