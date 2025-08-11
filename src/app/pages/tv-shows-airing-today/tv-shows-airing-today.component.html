@@ -1,33 +1,36 @@
-<div class="series-container">
-  <app-filters
-    [filterTitle]="'Airing Today'"
-    (searchBtnClicked)="onSearchFromFilters($event)"
-    [resetOption]="resetFilter()"
-    [contentType]="'tv'"
-  ></app-filters>
+<div class="main-container app-container">
+  <div class="series-container">
+    <app-filters
+      [filterTitle]="'Airing Today'"
+      (searchBtnClicked)="onSearchFromFilters($event)"
+      [resetOption]="resetFilter()"
+      [contentType]="'tv'"
+    ></app-filters>
 
-  @if (airingTodayTvShows().length) {
-  <div class="series-grid-and-button" [class.fade-in]="!loading()">
-    <div class="series-grid">
-      @for (airingTodayTvShow of airingTodayTvShows();track
-      airingTodayTvShow.id) {
-      <app-movie-card
-        [title]="airingTodayTvShow.original_name"
-        [posterPath]="airingTodayTvShow.poster_path"
-        [releaseDate]="airingTodayTvShow.first_air_date"
-        [voteAverage]="airingTodayTvShow.vote_average"
-        [movieId]="airingTodayTvShow.id"
-        [mediaType]="'tv'"
-      >
-      </app-movie-card>
-      }
+    @if (airingTodayTvShows().length) {
+    <div class="series-grid-and-button" [class.fade-in]="!loading()">
+      <div class="series-grid">
+        @for (airingTodayTvShow of airingTodayTvShows();track
+        airingTodayTvShow.id) {
+        <app-movie-card
+          [title]="airingTodayTvShow.original_name"
+          [posterPath]="airingTodayTvShow.poster_path"
+          [releaseDate]="airingTodayTvShow.first_air_date"
+          [voteAverage]="airingTodayTvShow.vote_average"
+          [movieId]="airingTodayTvShow.id"
+          [mediaType]="'tv'"
+        >
+        </app-movie-card>
+        }
+      </div>
+      <button class="load-more-btn" (click)="onLoadNextPages()">
+        Load More
+      </button>
     </div>
-    <button class="load-more-btn" (click)="onLoadNextPages()">Load More</button>
-  </div>
 
+    }
+  </div>
+  @if (loading()) {
+  <app-spinner />
   }
 </div>
-@if (loading()) {
-<app-spinner />
-}
-

@@ -1,22 +1,35 @@
 :host {
-  max-width: 250px;
   display: block;
-  min-height: 100vh;
+  max-width: clamp(220px, 25vw, 300px);
+  display: block;
   width: 100%;
+  
 
   .filters-title {
     display: flex;
-
+    margin-bottom: 1rem;
     width: 300px;
     color: white;
     max-height: 700px;
+
+    h2 {
+      font-size: clamp(18px, 2vw, 24px);
+    }
   }
 
   button.btn-outline-secondary {
     color: #2a2929;
-
+    font-size: 14px;
+    padding: 6px 5px;
+    border-radius: 8px;
+    white-space: nowrap;
     background-color: transparent;
     transition: background-color 0.2s ease;
+    flex: 0 0 auto;
+    min-width: 100px;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   .btn-outline-secondary:not(.active):not(.just-unselected):hover {
     background-color: #a19f9f;
@@ -27,15 +40,15 @@
   }
 
   button.btn-outline-secondary.active:hover {
-    background-color: var(--btn-hover)/* maintain active look */
+    background-color: var(--btn-hover); /* maintain active look */
   }
   .genre-container {
-    margin-top: 20px;
+    margin-top: clamp(15px, 3vw, 25px);
     color: white;
   }
 
   .genre-title {
-    font-size: 16px;
+    font-size: clamp(14px, 1.5vw, 18px);
     font-weight: 600;
     color: white;
     margin-bottom: 10px;
@@ -49,13 +62,18 @@
   }
 
   .genre-buttons .btn {
-    font-size: 15px;
-    padding: 6px 10px;
+    font-size: clamp(12px, 1.2vw, 15px);
+    padding: clamp(5px, 1vw, 8px) clamp(8px, 2vw, 12px);
     color: white;
     font-weight: 500;
     border-radius: 8px;
     border: 1px solid white;
-
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 80px;
+    flex: 0 0 auto;
+    max-width: 120px;
     transition: background-color 0.3s ease;
   }
 
@@ -70,11 +88,13 @@
   }
 
   button[ngbAccordionButton] {
-  background-color: white !important;
-  color: black;
-  border: 2px solid #dee2e6;
-  box-shadow: none;
-}
+    background-color: white !important;
+    color: black;
+    border: 2px solid #dee2e6;
+    box-shadow: none;
+    font-size: clamp(13px, 1.5vw, 16px);
+    padding: clamp(8px, 1.5vw, 12px);
+  }
 
   /* .combined-search-btn {
    display:block;
@@ -86,4 +106,25 @@
     font-size: 18px;
     font-weight: bold;
   } */
+}
+
+@media (max-width: 576px) {
+  :host {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .filters-title h2 {
+    font-size: 20px;
+  }
+
+  .genre-buttons .btn {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .search-button {
+    font-size: 18px;
+    padding: 12px;
+  }
 }

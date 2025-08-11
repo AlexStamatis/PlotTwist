@@ -89,6 +89,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     gap: 15px;
+    padding-bottom: 16px;
     scroll-behavior: smooth;
     transition: opacity 0.2s ease-in-out;
     scrollbar-color: rgba(255, 255, 255, 0.34) transparent;
@@ -137,6 +138,77 @@
     padding: 20px;
     border-radius: 12px;
   }
+@media (max-width: 991px) {
+  .search-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input, .search-button {
+    width: 100%;
+    border-radius: 13px;
+  }
+
+  .search-button {
+    margin-top : 10px;
+  }
+
+  .trending, .trailer, .recommendation {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  .toggle-button {
+    padding-bottom: 15px;
+
+  }
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  .movies-scrollbar,
+  .trailers-scrollbar,
+  .recommended-scrollbar {
+    gap: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+
+}
+
+@media (max-width: 576px) {
+  .home-page-container {
+    padding: 0 10px;
+  }
+
+  .search-wrapper {
+    max-width: 100%;
+  }
+
+  .movies-scrollbar,
+  .trailers-scrollbar,
+  .recommended-scrollbar {
+    gap: 8px;
+  }
+
+  p {
+    font-size: 18px;
+  }
+
+}
 
 
 }

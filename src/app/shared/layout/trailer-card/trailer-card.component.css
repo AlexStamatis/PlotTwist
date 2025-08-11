@@ -1,6 +1,9 @@
 :host {
+
+  display: block;
+  
   .trailer-card {
-    width: 370px;
+    width: clamp(250px, 45vw, 370px);
     background: white;
     border-radius: 10px;
     text-align: center;
@@ -29,16 +32,20 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 36px;
+    font-size: clamp(20px, 5vw, 36px);
     color: white;
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 30%;
-    padding: 14px;
+    padding: clamp(8px, 3vw, 14px);
   }
 
   .title {
+    padding: clamp(6px, 1.5vw, 10px);
     text-wrap: nowrap;
-    font-size: large;
-    font-family: cursive;
+    font-size: clamp(14px, 1.8vw, 20px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
+  
