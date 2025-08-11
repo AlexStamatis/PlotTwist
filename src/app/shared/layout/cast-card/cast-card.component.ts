@@ -7,7 +7,7 @@ import { Router, RouterModule } from '@angular/router';
   standalone:true,
   imports: [CommonModule,RouterModule],
   templateUrl: './cast-card.component.html',
-  styleUrl: './cast-card.component.css'
+  styleUrls: ['./cast-card.component.css']
 })
 export class CastCardComponent {
 @Input() castMember!: {

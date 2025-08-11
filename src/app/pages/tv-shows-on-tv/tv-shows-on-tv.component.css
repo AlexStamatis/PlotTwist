@@ -1,20 +1,38 @@
 :host {
   display: block;
-  padding-top: 30px;
+  padding-top: clamp(20px, 4vw, 40px);
+
+  .main-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    width: 100%;
+  }
 
   .series-container {
     display: flex;
-    margin: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     box-sizing: border-box;
-    max-width: 1250px;
-    padding: 0 20px;
+    gap: clamp(10px, 2vw, 40px);
+    width: 100%;
+  }
+
+  app-filters {
+    display: block;
+    flex: 0 0 clamp(200px, 25vw, 280px);
+    margin-bottom: clamp(10px, 3vw, 30px);
   }
 
   .series-grid-and-button {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1 1 0;
+    min-width: 0
   }
 
   .series-grid {
@@ -22,23 +40,41 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
-    padding-top: 60px;
+    gap: clamp(16px, 2vw, 24px);
+    padding-top: clamp(30px, 5vw, 60px);
+    min-height: clamp(400px, 80vh, 1000px);
   }
 
   .load-more-btn {
-    margin-top: 30px;
-    padding: 10px 25px;
-    font-size: 20px;
+    margin-top: clamp(20px, 4vw, 40px);
+    padding: clamp(10px, 1vw, 15px) clamp(20px, 3vw, 40px);
+    font-size: clamp(16px, 1.8vw, 20px);
     border-radius: 20px;
     background-color: var(--logo-color);
     font-weight: bold;
     cursor: pointer;
-    width: 300px;
+    width: clamp(180px, 30vw, 300px);
     align-self: center;
   }
 
   .load-more-btn:hover {
     background-color: var(--btn-hover);
   }
+
+  @media (max-width: 600px) {
+    .main-container {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .series-container {
+      flex-direction: column;
+    }
+
+    app-filters,
+    .series-grid-and-button {
+      width: 100%;
+      margin-bottom: clamp(10px, 3vw, 30px);
+    }
+}
 }

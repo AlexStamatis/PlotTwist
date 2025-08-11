@@ -5,12 +5,14 @@
     max-width: 1300px;
     flex-wrap: wrap;
     margin: auto;
+    gap: 10px;
   }
   .logo-container {
     cursor: pointer;
+    
   }
 
-  p {
+  .logo-name {
     color: var(--logo-color);
     font-size: 50px;
     font-family: cursive;
@@ -20,10 +22,11 @@
     font-size: 18px;
     justify-content: space-between;
     cursor: pointer;
+   
   }
   .navbar-options {
     font-weight: bold;
-    margin: 10px;
+    margin: 0 8px 0 0;
     color: white;
   }
   .navbar-options:hover {
@@ -81,6 +84,7 @@
     background-color: #333;
   }
 
+
   .logout-btn {
     background-color: var(--logo-color);
     border-radius: 50px;
@@ -88,5 +92,56 @@
     transition: all 0.3s ease;
     border: none;
     font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .header-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .header-container > div:first-child {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap; 
+    gap: 10px;
+    
+  }
+
+  .header-navbar {
+    align-items: end;
+    gap: 10px;
+    font-size: 16px; 
+  }
+
+  .navbar-options {
+    margin: 5px 0; 
+  }
+
+  .dropdown .btn-outline-light {
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 14px;
+    line-height: 35px;
+  }
+
+  .header-container > div:last-child {
+    width: 100%;
+    justify-content: flex-start !important; 
+    gap: 10px;
+    margin-top: 10px;
+    padding-bottom: 20px;
+  }
+
+  .login-btn,
+  .logout-btn {
+    padding: 6px 15px;
+    font-size: 14px;
+    height: 35px;
+  }
+
+ .logo-name {
+    margin-bottom: 0px;
+  }
   }
 }

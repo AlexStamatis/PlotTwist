@@ -1,7 +1,7 @@
-<div class="d-flex justify-content-between header-container">
+<div class="d-flex justify-content-between header-container app-container">
   <div class="d-flex">
     <div class="logo-container" (click)="sendHome()" style="cursor: pointer">
-      <p>Plot Twist</p>
+      <p class="logo-name">Plot Twist</p>
     </div>
 
     <nav class="navbar header-navbar">
@@ -9,6 +9,7 @@
         ><app-dropdown
           [category]="'Movies'"
           [options]="moviesOptions"
+          [isFirstDropdown]="true"
           (selectionChanged)="onDropdownSelect('movies', $event)"
         ></app-dropdown
       ></a>
@@ -33,11 +34,13 @@
       <span class="text-white">Welcome, {{ username() }}</span>
       <div class="dropdown">
         <button
+          #dropdownBtn
           class="btn btn-outline-light rounded-circle text-uppercase fw-bold"
           type="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
           style="width: 40px; height: 40px"
+          
         > {{username()?.charAt(0)}}</button>
         <ul class="dropdown-menu dropdown-menu-end">
           <li>
@@ -67,3 +70,4 @@
     </ng-template>
   </div>
 </div>
+

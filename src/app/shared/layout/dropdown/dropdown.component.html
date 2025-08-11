@@ -1,10 +1,18 @@
 <div class="dropdown">
-  <div data-toggle="dropdown">
+  <button
+    class="btn dropdown-toggle bg-transparent border-0 text-white"
+    [ngClass]="{ 'first-dropdown': isFirstDropdown}"
+    type="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
     {{ category }}
-  </div>
+  </button>
   <ul class="dropdown-menu">
     <li *ngFor="let option of options">
-      <a class="dropdown-item" (click)="onSelect(option)"> {{ option }}</a>
+      <a class="dropdown-item" href="#" (click)="onSelect(option); $event.preventDefault()">
+        {{ option }}
+      </a>
     </li>
   </ul>
 </div>

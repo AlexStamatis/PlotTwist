@@ -1,32 +1,34 @@
 .card-wrapper {
     display:flex;
     flex-direction: column;
-    width:150px;
+    width: clamp(120px, 20vw, 160px);
     align-items: center;
     cursor: pointer;
     color: white;
     text-align: center;
+    margin: clamp(10px, 2vw, 20px);
 
 }
 
 .profile {
     width:100%;
-    height: 200px;
+    height: clamp(160px, 20vw, 220px);
     object-fit: cover;
     border-radius: 8px;
 }
 
 .person-details {
-    margin-top: 10px;
+    margin-top: clamp(8px, 1vw, 16px);
 }
 
 .person-details h3 {
-    font-size: 20px;
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
     font-weight: bold;
 }
 
 .character,
 .episodes {
-    font-size: 15px;
+    font-size: clamp(0.8rem, 1vw, 1rem);
     color: #cacaca;
+    line-height: 1.4;
 }

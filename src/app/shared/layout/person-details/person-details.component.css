@@ -1,15 +1,16 @@
 .person-details-container {
   display: flex;
   flex-direction: row;
-  gap: 30px;
-  padding: 30px;
+  flex-wrap: wrap;
+  gap: clamp(16px, 3vw, 30px);
+  padding: clamp(16px, 3vw, 30px);
   max-width: 1300px;
   margin: auto;
   font-family: Arial, sans-serif;
 }
 
 .left-side {
-  width: 250px;
+  width: clamp(180px, 20vw, 250px);
   flex-shrink: 0;
 }
 
@@ -19,16 +20,15 @@
 }
 
 .personal-info {
-  width: 100%;
   background-color: #f5f5f5;
-  padding: 16px;
+  padding: clamp(12px, 2vw, 16px);
   border-radius: 8px;
-  font-size: 14px;
-  margin-top: 20px;
+  font-size: clamp(12px, 1.4vw, 14px);
+  margin-top: clamp(12px, 2vw, 20px);
 }
 
 .personal-info p {
-  font-size: 16px;
+  font-size: clamp(14px, 1.5vw, 16px);
 }
 
 .right-side {
@@ -38,20 +38,20 @@
 }
 
 .right-side h1 {
-  max-width: 500px;
+  max-width: 100%;
   margin-top: 0;
-  font-size: 32px;
+  font-size: clamp(20px, 3vw, 32px);
   color: white;
 }
 
 .right-side h3 {
   color: white;
-  margin-top: 20px;
-  font-size: 25px;
+  margin-top: clamp(16px, 2vw, 20px);
+  font-size: clamp(18px, 2.2vw, 25px);
 }
 
 .biography {
-  margin-bottom: 32px;
+  margin-bottom: clamp(20px, 3vw, 32px);
   line-height: 1.5;
   color: white;
 }
@@ -59,11 +59,11 @@
 .known-for-movies {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: clamp(8px, 1.5vw, 16px);
 }
 
 .known-for-card {
-  width: 140px;
+  width: clamp(110px, 12vw, 140px);
   text-align: center;
 }
 
@@ -75,7 +75,7 @@
 
 .known-for-card p {
   margin: 0;
-  font-size: 14px;
+  font-size: clamp(12px, 1.3vw, 14px);
   color: white;
 }
 
@@ -96,10 +96,10 @@
   color: black;
   font-weight: 500;
   border: none;
-  padding: 8px 14px;
+  padding: clamp(6px, 1vw, 8px) clamp(10px, 1.5vw, 14px);
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: clamp(12px, 1.4vw, 14px);
 }
 
 .toggle-bio-btn:hover {
@@ -109,7 +109,7 @@
 .credits-container {
   display: flex;
   flex-wrap: nowrap;
-  align-items: flex-start;
+  gap: clamp(12px, 2vw, 20px);
   color: white;
 }
 
@@ -117,31 +117,42 @@
   flex: 1;
   display: flex;
   flex-direction: column;       
-  max-width: 600px;
-  gap: 10px;
+  gap: clamp(8px, 1.5vw, 10px);
   
 }
 
 .credit-item {
   display: flex;
-  gap: 20px;
   align-items: center;
-  font-size: 16px;
+ flex-wrap: wrap;
+  gap: clamp(12px, 2vw, 20px);
+  align-items: center;
+  font-size: clamp(14px, 1.5vw, 16px);
 }
 
 .credit-item .year {
   font-weight: bold;
-  width: 60px;
+  flex: 0 0 clamp(40px, 6vw, 60px);
 }
 
 .credit-item .role {
+  flex: 0 1 auto;
   font-style: italic;
   color: #e3b7b7;
+  min-width: clamp(100px, 25vw, 200px);
+  text-align: right;
+}
+
+.credit-item .title {
+  flex: 1 1 auto;
+  min-width: clamp(120px, 40vw, 300px);
+  word-break: break-word;
 }
 
 .filters {
   display: flex;
-  gap: 10px;
+  gap: clamp(8px, 1.5vw, 10px);
+  flex-wrap: wrap;
   
   
 }
@@ -149,7 +160,7 @@
 .filters select {
   background-color: transparent;
   color: white;
-  font-size: 16px;
+  font-size: clamp(14px, 1.5vw, 16px);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   border: none;
   cursor: pointer;
@@ -161,7 +172,66 @@
   background-color: white;
 }
 
+@media (max-width: 768px) {
+  .person-details-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .left-side {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .personal-info {
+    text-align: left;
+  }
+
+  .right-side {
+    width: 100%;
+    align-items: center;
+  }
+
+  .right-side h1,
+  .right-side h3,
+  .biography {
+    text-align: center;
+  }
+
+  .known-for-movies {
+    justify-content: center;
+  }
+
+  .credits-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .credits-list {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .credit-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .credit-item .year,
+  .credit-item .title,
+  .credit-item .role {
+    flex: 0 0 auto;
+    min-width: auto;
+    text-align: left;
+  }
+  
+  .filters {
+    justify-content: center;
+  }
 
 
+}
 
 
