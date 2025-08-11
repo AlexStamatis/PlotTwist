@@ -19,9 +19,14 @@ body {
 .app-container {
   max-width: 1300px; 
   margin: 0 auto;  
-  padding: 0 20px;
+ 
 }
 
+@media (max-width: 768px) {
+    .app-container {
+        padding: 0 20px;
+    }
+}
 
 
 /* @media only screen and (min-width: 700px) {

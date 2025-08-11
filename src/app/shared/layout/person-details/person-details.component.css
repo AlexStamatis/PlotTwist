@@ -3,7 +3,6 @@
   flex-direction: row;
   flex-wrap: wrap;
   gap: clamp(16px, 3vw, 30px);
-  padding: clamp(16px, 3vw, 30px);
   max-width: 1300px;
   margin: auto;
   font-family: Arial, sans-serif;
