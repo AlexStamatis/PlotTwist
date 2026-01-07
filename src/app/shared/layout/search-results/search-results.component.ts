@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, Input, isSignal, signal } from '@angular/core';
+import { Component, effect, inject, Input, signal } from '@angular/core';
 import { TmdbService } from '../../services/tmdb.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Params } from '@angular/router';

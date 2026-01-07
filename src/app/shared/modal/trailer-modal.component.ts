@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SafeUrlPipe } from '../directives/safe-url-pipe.pipe';
+import { SafeUrlPipe } from '../Pipes/safe-url-pipe.pipe';
 
 @Component({
   selector: 'app-trailer-modal',
