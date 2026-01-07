@@ -231,7 +231,13 @@
     justify-content: center;
   }
 
+  
 
+
+}
+
+.title:hover {
+  color: var(--logo-color);
 }
 
 

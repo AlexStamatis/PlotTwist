@@ -43,7 +43,7 @@
     </button>
     <h3>Known For</h3>
     <div class="known-for-movies">
-      <div class="known-for-card" *ngFor="let item of knownFor()">
+      <div class="known-for-card" *ngFor="let item of knownFor()" (click)="goToMovieDetails(item)" style="cursor: pointer;">
         <img
           [src]="'https://image.tmdb.org/t/p/w185' + item.poster_path"
           [alt]="item.title || item.name"
@@ -64,7 +64,7 @@
                 : "—"
             }}
           </span>
-          <span class="title">
+          <span class="title" (click)="goToMovieDetails(item)" style="cursor: pointer;">
             {{ item.title || item.name }}
           </span>
           <span class="role" *ngIf="item.character || item.job">

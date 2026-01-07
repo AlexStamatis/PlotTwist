@@ -1,5 +1,5 @@
 import { Component, computed, effect, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TmdbService } from '../../services/tmdb.service';
 import { CommonModule } from '@angular/common';
 
@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './person-details.component.html',
   styleUrl: './person-details.component.css',
+  
 })
 export class PersonDetailsComponent {
   person = signal<any>(null);
@@ -61,6 +62,7 @@ export class PersonDetailsComponent {
   }
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private tmdbService: TmdbService
   ) {}
@@ -177,5 +179,16 @@ export class PersonDetailsComponent {
     this.selectedMediaType.set('all');
     this.selectedDepartment.set('');
     this.filteredCredits.set(this.allCredits());
+  }
+
+  goToMovieDetails(item:any) {
+    let type: string;
+    if(item.media_type) {
+      type = item.media_type; 
+    } else {
+      type = item.title ? 'movie' : 'tv';
+    }
+    
+    this.router.navigate([`/${type}`, item.id]);
   }
 }
